@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace API_SWP.Model
 {
@@ -18,5 +19,6 @@ namespace API_SWP.Model
         public string PhoneNumber { get; set; } = null!;
 
         public virtual ICollection<Request> Requests { get; set; }
+        public string ToString()  => Password;
     }
 }

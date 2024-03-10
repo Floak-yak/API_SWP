@@ -32,7 +32,7 @@ namespace API_SWP.Controllers
             return Ok(admin);
         }
         [HttpGet("GetAdminById")]
-        [ProducesResponseType(200, Type = typeof(Admin))]
+        [ProducesResponseType(200, Type = typeof(AdminModel))]
         [ProducesResponseType(400)]
         public IActionResult GetAdmin(string AdminId)
         {
@@ -40,11 +40,14 @@ namespace API_SWP.Controllers
             {
                 return NotFound();
             }
-            var admin = _mapper.Map<Admin>(_adminRepository.GetAdmin(AdminId));
+            var add = _mapper.Map<Admin>(_adminRepository.GetAdmin(AdminId));
+            AdminModel admin = new () { AdminSPassword = add.AdminSPassword, AdminSMail = add.AdminSMail };
+            var result = "{\"AdminSMail\": \"" + admin.AdminSMail + "\",\"AdminSMail\": \"" + admin.AdminSPassword + "\"}";
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            //return Ok(Json(result).Value);
             return Ok(admin);
         }
         [HttpPut("AdminId/Update")]

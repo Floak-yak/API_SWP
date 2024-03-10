@@ -160,5 +160,30 @@ namespace API_SWP.Controllers
             }
             return Ok(customer);
         }
+
+
+
+
+
+
+
+
+
+        [HttpGet("Customerid/password")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public IActionResult Getpass(string chuoimahoa ,string customerid)
+        {
+            if (!_customerRepository.CustomerExits(customerid))
+            {
+                return NotFound();
+            }
+            var customer = _mapper.Map<CustomerDto>(_customerRepository.Encrypt(chuoimahoa, customerid));
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(customer);
+        }
     }
 }

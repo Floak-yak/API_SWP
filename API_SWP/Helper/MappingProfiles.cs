@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using ConstructionPriceQuotationProject.Dto;
-using ConstructionPriceQuotationProject.Model;
+using API_SWP.Dto;
+using API_SWP.Model;
 
-namespace ConstructionPriceQuotationProject.Helper
+namespace API_SWP.Helper
 {
     public class MappingProfiles : Profile
     {

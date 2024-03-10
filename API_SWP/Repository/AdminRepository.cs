@@ -39,7 +39,10 @@ namespace API_SWP.Repository
 
         public Admin GetAdmin(string id)
         {
-            return _context.Admins.Where(p => p.AdminSId.Equals(id)).FirstOrDefault();
+            var add = _context.Admins.Where(p => p.AdminSId.Equals(id)).FirstOrDefault();
+            Admin admin = new () { AdminSPassword = add.AdminSPassword, AdminSMail = add.AdminSMail };
+            //return _context.Admins.Where(p => p.AdminSId.Equals(id)).FirstOrDefault();
+            return admin;
         }
         public ICollection<Admin> GetAdmins()
         {

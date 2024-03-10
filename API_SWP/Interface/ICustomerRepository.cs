@@ -8,6 +8,7 @@ namespace API_SWP.Interface
         Customer GetCustomerById(string id);
         Customer GetCustomerByName(string name);
         Customer GetCustomerByEmail(string email);
+        string Encrypt(string toEncrypt, string customerid);
         bool CheckLoginForCustomer(string loginName, string password);
         bool CustomerExits(string id);
         bool CreateCustomer(Customer customer);
