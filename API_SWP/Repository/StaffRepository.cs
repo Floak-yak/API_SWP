@@ -52,18 +52,9 @@ namespace API_SWP.Repository
             return Save();
         }
 
-        public bool CheckLoginForStaff(string staffEmail, string staffPassword)
+        public Staff CheckLoginForStaff(string staffEmail, string staffPassword)
         {
-            try
-            {
-                var temp = _context.Staff.SingleOrDefault(p => p.StaffSEmail == staffEmail && p.StaffPassword == staffPassword);
-                if (temp != null) return true;
-                else return false;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message + "");
-            }
+                return _context.Staff.SingleOrDefault(p => p.StaffSEmail == staffEmail && p.StaffPassword == staffPassword);
         }
     }
 }

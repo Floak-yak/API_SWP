@@ -149,11 +149,12 @@ namespace API_SWP.Controllers
             return Ok("Update successfully");
         }
         [HttpGet("CheckLoginCustomer")]
-        [ProducesResponseType(200, Type = typeof(Admin))]
+        [ProducesResponseType(200, Type = typeof(Customer))]
         [ProducesResponseType(400)]
         public IActionResult CheckLoginCustomer([FromQuery] string EmailCustomer, [FromQuery] string password)
         {
-            var customer = _customerRepository.CheckLoginForCustomer(EmailCustomer, password);
+            var customer = _mapper.Map<CustomerDto>(_customerRepository.CheckLoginForCustomer(EmailCustomer, password));
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

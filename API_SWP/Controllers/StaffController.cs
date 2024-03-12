@@ -131,11 +131,11 @@ namespace API_SWP.Controllers
             return NoContent();
         }
         [HttpGet("CheckLoginStaff")]
-        [ProducesResponseType(200, Type = typeof(Admin))]
+        [ProducesResponseType(200, Type = typeof(Staff))]
         [ProducesResponseType(400)]
         public IActionResult CheckLoginStaff([FromQuery] string staffEmail, [FromQuery] string staffPassword)
         {
-            var staff = _staffrepository.CheckLoginForStaff(staffEmail, staffPassword);
+            var staff = _mapper.Map<StaffDto>(_staffrepository.CheckLoginForStaff(staffEmail, staffPassword));
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

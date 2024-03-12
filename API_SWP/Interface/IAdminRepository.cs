@@ -6,7 +6,7 @@ namespace API_SWP.Interface
     {
         ICollection<Admin> GetAdmins();
         Admin GetAdmin(string id);
-        bool CheckLoginForAdmin(string adminMail, string adminPassword);
+        Admin CheckLoginForAdmin(string adminMail, string adminPassword);
         bool CreateAdmin (Admin admin);
         bool AdminExits(string id);
         bool UpdateAdmin(Admin admin);

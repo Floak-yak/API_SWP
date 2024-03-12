@@ -16,18 +16,9 @@ namespace API_SWP.Repository
             _context = context;
         }
 
-        public bool CheckLoginForCustomer(string email, string password)
+        public Customer CheckLoginForCustomer(string email, string password)
         {
-            try
-            {
-                var temp = _context.Customers.SingleOrDefault(p => p.CustomerEmail == email && p.Password == password);
-                if (temp != null) return true;
-                else return false;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message + "");
-            }
+            return _context.Customers.SingleOrDefault(p => p.CustomerEmail == email && p.Password == password);
         }
 
         public bool CreateCustomer(Customer customer)

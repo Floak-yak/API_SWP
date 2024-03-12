@@ -6,7 +6,7 @@ namespace API_SWP.Interface
     {
         ICollection<Staff> GetStaffs();
         Staff GetStaff(string staffid);
-        bool CheckLoginForStaff(string staffEmail, string staffPassword);
+        Staff CheckLoginForStaff(string staffEmail, string staffPassword);
         bool StaffExist(string staffid);
         bool CreateStaff(Staff staff);
         bool RemoveStaff(Staff staff);
