@@ -8,8 +8,8 @@ namespace API_SWP.Repository
     {
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            var mail = "khiemphse170605@fpt.edu.vn";
-            var password = "3141592654.";
+            var mail = "";
+            var password = ".";
             var client = new SmtpClient("mail", 587)
             {
                 EnableSsl = true,
