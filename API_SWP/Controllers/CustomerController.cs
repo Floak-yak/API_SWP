@@ -109,7 +109,7 @@ namespace API_SWP.Controllers
         public IActionResult CreateCustomer([FromBody] CustomerDto createCustomer)
         {
             if (createCustomer == null) return BadRequest(ModelState);
-            var customer = _customerRepository.GetCustomers().Where(p => p.CustomerEmail.Trim() == createCustomer.CustomerSEmail.Trim()).FirstOrDefault();
+            var customer = _customerRepository.GetCustomers().Where(p => p.CustomerEmail.Trim() == createCustomer.CustomerEmail.Trim()).FirstOrDefault();
             if (customer != null)
             {
                 ModelState.AddModelError("", "This customer is already exist");
@@ -151,9 +151,9 @@ namespace API_SWP.Controllers
         [HttpGet("CheckLoginCustomer")]
         [ProducesResponseType(200, Type = typeof(Admin))]
         [ProducesResponseType(400)]
-        public IActionResult CheckLoginCustomer([FromQuery] string loginName, [FromQuery] string password)
+        public IActionResult CheckLoginCustomer([FromQuery] string EmailCustomer, [FromQuery] string password)
         {
-            var customer = _customerRepository.CheckLoginForCustomer(loginName, password);
+            var customer = _customerRepository.CheckLoginForCustomer(EmailCustomer, password);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

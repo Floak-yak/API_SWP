@@ -16,11 +16,11 @@ namespace API_SWP.Repository
             _context = context;
         }
 
-        public bool CheckLoginForCustomer(string loginName, string password)
+        public bool CheckLoginForCustomer(string email, string password)
         {
             try
             {
-                var temp = _context.Customers.SingleOrDefault(p => p.LoginName == loginName && p.Password == password);
+                var temp = _context.Customers.SingleOrDefault(p => p.CustomerEmail == email && p.Password == password);
                 if (temp != null) return true;
                 else return false;
             }

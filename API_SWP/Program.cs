@@ -19,6 +19,7 @@ builder.Services.AddScoped<IConstructionReceivedRepository, ConstructionReceived
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddMvc();
 builder.Services.AddControllers();
+builder.Services.AddTransient<IAdminRepository, AdminRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
