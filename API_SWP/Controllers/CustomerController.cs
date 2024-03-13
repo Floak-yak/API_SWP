@@ -106,7 +106,7 @@ namespace API_SWP.Controllers
         [HttpPost("Create")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateCustomer([FromBody] CustomerDto createCustomer)
+        public IActionResult CreateCustomer([FromBody] CustomerRegisterDto createCustomer)
         {
             if (createCustomer == null) return BadRequest(ModelState);
             var customer = _customerRepository.GetCustomers().Where(p => p.CustomerEmail.Trim() == createCustomer.CustomerEmail.Trim()).FirstOrDefault();
@@ -119,6 +119,15 @@ namespace API_SWP.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var customerMap = _mapper.Map<Customer>(createCustomer);
+            customerMap.PhoneNumber = "";
+            do
+            {
+                Random rnd = new Random();
+                customerMap.CustomerSId = rnd.Next(1, 10000).ToString();
+                    
+            } while (_customerRepository.CustomerExits(customerMap.CustomerSId) == true);
+            customerMap.LoginName = "";
+            
 
             if (!_customerRepository.CreateCustomer(customerMap))
             {
