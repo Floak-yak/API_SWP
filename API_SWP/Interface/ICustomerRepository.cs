@@ -4,9 +4,9 @@ namespace API_SWP.Interface
 {
     public interface ICustomerRepository
     {
+        List<Customer> GetCustomerByName(string customerName);
         ICollection<Customer> GetCustomers();
         Customer GetCustomerById(string id);
-        Customer GetCustomerByName(string name);
         Customer GetCustomerByEmail(string email);
         string Encrypt(string toEncrypt, string customerid);
         Customer CheckLoginForCustomer(string customerEmail, string password);

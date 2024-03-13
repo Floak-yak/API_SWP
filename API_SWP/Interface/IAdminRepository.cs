@@ -5,6 +5,7 @@ namespace API_SWP.Interface
     public interface IAdminRepository
     {
         ICollection<Admin> GetAdmins();
+        List<Admin> GetAdminByName(string adminMail);
         Admin GetAdmin(string id);
         Admin CheckLoginForAdmin(string adminMail, string adminPassword);
         bool CreateAdmin (Admin admin);

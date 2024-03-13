@@ -90,11 +90,6 @@ namespace API_SWP.Repository
         {
             return _context.Customers.Where(p => p.CustomerSId == id).FirstOrDefault();
         }
-
-        public Customer GetCustomerByName(string name)
-        {
-            return _context.Customers.Where(p => p.CustomerSName == name).FirstOrDefault();
-        }
         public ICollection<Customer> GetCustomers()
         {
             return _context.Customers.OrderBy(p => p.CustomerSId).ToList();
@@ -116,6 +111,11 @@ namespace API_SWP.Repository
         {
             _context.Update(customer);
             return Save();
+        }
+
+        List<Customer> ICustomerRepository.GetCustomerByName(string customerName)
+        {
+            return _context.Customers.Where(p => p.CustomerSName.Contains(customerName)).ToList();
         }
     }
 }

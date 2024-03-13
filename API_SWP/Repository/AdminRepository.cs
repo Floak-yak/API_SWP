@@ -35,6 +35,12 @@ namespace API_SWP.Repository
             //return _context.Admins.Where(p => p.AdminSId.Equals(id)).FirstOrDefault();
             return admin;
         }
+
+        public List<Admin> GetAdminByName(string adminMail)
+        {
+            return _context.Admins.Where(p => p.AdminSMail.Contains(adminMail)).ToList();
+        }
+
         public ICollection<Admin> GetAdmins()
         {
             return _context.Admins.OrderBy(p => p.AdminSId).ToList();

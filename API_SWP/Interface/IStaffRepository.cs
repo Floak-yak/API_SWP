@@ -4,6 +4,7 @@ namespace API_SWP.Interface
 {
     public interface IStaffRepository
     {
+        List<Staff> GetStaffByName(string staffName);
         ICollection<Staff> GetStaffs();
         Staff GetStaff(string staffid);
         Staff CheckLoginForStaff(string staffEmail, string staffPassword);

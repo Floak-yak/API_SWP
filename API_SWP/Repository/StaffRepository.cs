@@ -56,5 +56,10 @@ namespace API_SWP.Repository
         {
                 return _context.Staff.SingleOrDefault(p => p.StaffSEmail == staffEmail && p.StaffPassword == staffPassword);
         }
+
+        public List<Staff> GetStaffByName(string staffName)
+        {
+            return _context.Staff.Where(p => p.StaffSName.Contains(staffName)).ToList();
+        }
     }
 }

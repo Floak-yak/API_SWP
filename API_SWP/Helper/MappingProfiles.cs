@@ -8,6 +8,8 @@ namespace API_SWP.Helper
     {
         public MappingProfiles()
         {
+            CreateMap<Admin, AdminModel>();
+            CreateMap<AdminModel, Admin>();
             CreateMap<Customer, CustomerRegisterDto>();
             CreateMap<CustomerRegisterDto, Customer>();
             CreateMap<Customer, CustomerDto>();

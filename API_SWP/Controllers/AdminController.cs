@@ -50,6 +50,21 @@ namespace API_SWP.Controllers
             //return Ok(Json(result).Value);
             return Ok(admin);
         }
+
+        [HttpGet("GetAdminByMail")]
+        [ProducesResponseType(200, Type = typeof(AdminModel))]
+        [ProducesResponseType(400)]
+        public IActionResult GetAdminByEmail(string AdminEmail)
+        {
+            var admin = _mapper.Map<List<Admin>>(_adminRepository.GetAdminByName(AdminEmail));
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            //return Ok(Json(result).Value);
+            return Ok(admin);
+        }
+
         [HttpPut("AdminId/Update")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]

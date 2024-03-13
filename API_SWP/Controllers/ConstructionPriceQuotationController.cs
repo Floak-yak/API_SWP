@@ -50,38 +50,6 @@ namespace API_SWP.Controllers
             }
             return Ok(constructionPriceQuotation);
         }
-        [HttpGet("GetPriceById")]
-        [ProducesResponseType(200, Type = typeof(string))]
-        [ProducesResponseType(400)]
-        public IActionResult GetHouseType(string QuotationId)
-        {
-            if (!_constructionPriceQuotationRepository.ConstructionPriceQuotationExist(QuotationId))
-            {
-                return NotFound();
-            }
-            var houseType = _mapper.Map<ConstructionPriceQuotationDto>(_constructionPriceQuotationRepository.GetHouseType(QuotationId));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Ok(houseType);
-        }
-        [HttpGet("GetAdviseById")]
-        [ProducesResponseType(200, Type = typeof(ConstructionPriceQuotation))]
-        [ProducesResponseType(400)]
-        public IActionResult GetAdviseById(string QuotationId)
-        {
-            if (!_constructionPriceQuotationRepository.ConstructionPriceQuotationExist(QuotationId))
-            {
-                return NotFound();
-            }
-            var houseType = _mapper.Map<ConstructionPriceQuotationDto>(_constructionPriceQuotationRepository.GetAdvise(QuotationId));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Ok(houseType);
-        }
         [HttpDelete("ConstructionPriceQuotatonId/Delete")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]

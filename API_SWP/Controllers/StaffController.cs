@@ -46,7 +46,19 @@ namespace API_SWP.Controllers
             }
             return Ok(staff);
         }
-
+        [HttpGet("GetStaffByName")]
+        [ProducesResponseType(200, Type = typeof(StaffDto))]
+        [ProducesResponseType(400)]
+        public IActionResult GetAdminByEmail(string staffName)
+        {
+            var staff = _mapper.Map<List<StaffDto>>(_staffrepository.GetStaffByName(staffName));
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            //return Ok(Json(result).Value);
+            return Ok(staff);
+        }
         [HttpPost("Create")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]

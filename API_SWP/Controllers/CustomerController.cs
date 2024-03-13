@@ -46,25 +46,17 @@ namespace API_SWP.Controllers
             }
             return Ok(customer);
         }
-        [HttpGet("CustomerName")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Customer>))]
+        [HttpGet("GetCustomerByName")]
+        [ProducesResponseType(200, Type = typeof(CustomerDto))]
         [ProducesResponseType(400)]
-        public IActionResult GetCustomerByName(string customername)
+        public IActionResult GetAdminByEmail(string customerName)
         {
-            var _customer = _mapper.Map<CustomerDto>(_customerRepository.GetCustomerByName(customername));
-            var customer = _customer.GetType().GetProperties().Where(p => p.PropertyType == typeof(string));
-            foreach (var stringProperty in customer)
-            {
-                string currentValue = (string)stringProperty.GetValue(_customer, null);
-                stringProperty.SetValue(_customer, currentValue.Trim(), null);
-            }
-            if (customer == null)
-                return NotFound();
+            var customers = _mapper.Map<List<CustomerDto>>(_customerRepository.GetCustomerByName(customerName));
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok(customer);
+            return Ok(customers);
         }
         [HttpGet("CustomerEmail")]
         [ProducesResponseType(200, Type = typeof(Customer))]
