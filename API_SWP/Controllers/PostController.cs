@@ -112,7 +112,7 @@ namespace API_SWP.Controllers
             if (updatedPost == null)
                 return BadRequest(ModelState);
 
-            if (postId != updatedPost.StaffId)
+            if (postId != updatedPost.PostSId)
                 return BadRequest(ModelState);
 
             if (!_postRepository.PostExits(postId))
@@ -130,6 +130,18 @@ namespace API_SWP.Controllers
             }
 
             return NoContent();
+        }
+        [HttpGet("GetPostWithImage")]
+        [ProducesResponseType(200, Type = typeof(Post))]
+        [ProducesResponseType(400)]
+        public IActionResult getPostWithImage()
+        {
+            var post = _mapper.Map<List<Post>>(_postRepository.GetPosts());
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(post);
         }
     }
 }
