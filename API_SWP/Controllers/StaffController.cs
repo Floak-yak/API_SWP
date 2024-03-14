@@ -94,12 +94,9 @@ namespace API_SWP.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateStaff(string staffId, [FromBody] StaffDto updatedStaff)
+        public IActionResult UpdateStaff(string staffId, [FromBody] StaffUpdateModel updatedStaff)
         {
             if (updatedStaff == null)
-                return BadRequest(ModelState);
-
-            if (staffId != updatedStaff.StaffSId)
                 return BadRequest(ModelState);
 
             if (!_staffrepository.StaffExist(staffId))
@@ -109,7 +106,7 @@ namespace API_SWP.Controllers
                 return BadRequest();
 
             var staffMap = _mapper.Map<Staff>(updatedStaff);
-
+            staffMap.StaffSId = staffId;
             if (!_staffrepository.UpdateStaff(staffMap))
             {
                 ModelState.AddModelError("", "Something went wrong updating staff");

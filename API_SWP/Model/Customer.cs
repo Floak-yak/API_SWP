@@ -17,8 +17,6 @@ namespace API_SWP.Model
         public string LoginName { get; set; } = null!;
         public string Password { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
-
         public virtual ICollection<Request> Requests { get; set; }
-        public string ToString()  => Password;
     }
 }

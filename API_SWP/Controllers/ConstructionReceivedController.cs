@@ -96,15 +96,16 @@ namespace API_SWP.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateConstructionRecieved (string constructionRecievedId, [FromBody] ConstructionReceivedDto constructionReceivedUpdate)
+        public IActionResult UpdateConstructionRecieved (string constructionRecievedId, [FromBody] ConstructionReceivedUpdateModel constructionReceivedUpdate)
         {
             if (constructionReceivedUpdate == null) return BadRequest(ModelState);
-            if (constructionRecievedId != constructionReceivedUpdate.ConstructionReceivedId) return BadRequest(ModelState);
             if (!_constructionReceivedRepository.ConstructionReceivedExits(constructionRecievedId)) return NotFound();
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var ConReMap = _mapper.Map<ConstructionReceived>(constructionReceivedUpdate);
-
+            ConReMap.ConstructionReceivedId = constructionRecievedId;
+            ConReMap.Date = _constructionReceivedRepository.ConstructionReceived(constructionRecievedId).Date;
+            ConReMap.QuotationId = _constructionReceivedRepository.ConstructionReceived(constructionRecievedId).QuotationId;
             if (!_constructionReceivedRepository.UpdateConstructionReceived(ConReMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");

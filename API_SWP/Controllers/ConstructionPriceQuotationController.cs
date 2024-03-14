@@ -107,15 +107,16 @@ namespace API_SWP.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateConstructionRecieved(string quotationId, [FromBody] ConstructionPriceQuotationDto quotationUpdate)
+        public IActionResult UpdateConstructionRecieved(string quotationId, [FromBody] ConstructionPriceQuotationUpdateModel quotationUpdate)
         {
             if (quotationUpdate == null) return BadRequest(ModelState);
-            if (quotationId != quotationUpdate.QuotationId) return BadRequest(ModelState);
             if (!_constructionPriceQuotationRepository.ConstructionPriceQuotationExist(quotationId)) return NotFound();
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var quotationMap = _mapper.Map<ConstructionPriceQuotation>(quotationUpdate);
-
+            quotationMap.QuotationId = quotationId;
+            quotationMap.StaffId = _constructionPriceQuotationRepository.GetConstructionPriceQuotation(quotationId).StaffId;
+            quotationMap.RequestId = _constructionPriceQuotationRepository.GetConstructionPriceQuotation(quotationId).RequestId;
             if (!_constructionPriceQuotationRepository.UpdateCostructionPriceQuotation(quotationMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");

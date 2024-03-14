@@ -8,7 +8,7 @@ namespace API_SWP.Interface
         ICollection<Customer> GetCustomers();
         Customer GetCustomerById(string id);
         Customer GetCustomerByEmail(string email);
-        string Encrypt(string toEncrypt, string customerid);
+        //string Encrypt(string toEncrypt, string customerid);
         Customer CheckLoginForCustomer(string customerEmail, string password);
         bool CustomerExits(string id);
         bool CreateCustomer(Customer customer);

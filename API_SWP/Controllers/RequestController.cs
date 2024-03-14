@@ -105,15 +105,18 @@ namespace API_SWP.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateRequest(string RequestId, [FromBody] RequestDto UpdateRequest)
+        public IActionResult UpdateRequest(string RequestId, [FromBody] RequestUpdateModel UpdateRequest)
         {
             if (UpdateRequest == null) return BadRequest(ModelState);
-            if (RequestId != UpdateRequest.RequestId) return BadRequest(ModelState);
             if (_requestRepository.RequestExists(RequestId)) return NotFound();
             if (!ModelState.IsValid) return BadRequest();
 
             var requestMap = _mapper.Map<Request>(UpdateRequest);
-            
+            requestMap.RequestId = RequestId;
+            requestMap.Date = _requestRepository.GetRequestById(RequestId).Date;
+            requestMap.CustomerPhone = _requestRepository.GetRequestById(RequestId).CustomerPhone;
+            requestMap.CustomerId = _requestRepository.GetRequestById(RequestId).CustomerId;
+
             if (!_requestRepository.UpdateRequest(requestMap))
             {
                 ModelState.AddModelError("", "Something went wrong went update.");

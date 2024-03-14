@@ -107,12 +107,9 @@ namespace API_SWP.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateOwner(string postId, [FromBody] PostDto updatedPost)
+        public IActionResult UpdateOwner(string postId, [FromBody] PostUpdateModel updatedPost)
         {
             if (updatedPost == null)
-                return BadRequest(ModelState);
-
-            if (postId != updatedPost.PostSId)
                 return BadRequest(ModelState);
 
             if (!_postRepository.PostExits(postId))
@@ -122,6 +119,9 @@ namespace API_SWP.Controllers
                 return BadRequest();
 
             var postMap = _mapper.Map<Post>(updatedPost);
+            postMap.PostSId = postId;
+            postMap.Date = _postRepository.GetPost(postId).Date;
+            postMap.StaffId = _postRepository.GetPost(postId).StaffId;
 
             if (!_postRepository.UpdatePost(postMap))
             {

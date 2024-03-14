@@ -133,15 +133,14 @@ namespace API_SWP.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateCustomer(string customerId ,[FromBody] CustomerDto updateCustomer)
+        public IActionResult UpdateCustomer(string customerId ,[FromBody] CustomerUpdateModel updateCustomer)
         {
             if (updateCustomer == null) return BadRequest(ModelState);
-            if (customerId != updateCustomer.CustomerSId) return BadRequest(ModelState);
             if (!_customerRepository.CustomerExits(customerId)) return NotFound();
             if (!ModelState.IsValid) return BadRequest();
 
             var customerMap = _mapper.Map<Customer>(updateCustomer);
-            
+            customerMap.CustomerSId = customerId;
             if (!_customerRepository.UpdateCustomer(customerMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
@@ -171,21 +170,21 @@ namespace API_SWP.Controllers
 
 
 
-        [HttpGet("Customerid/password")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        public IActionResult Getpass(string chuoimahoa ,string customerid)
-        {
-            if (!_customerRepository.CustomerExits(customerid))
-            {
-                return NotFound();
-            }
-            var customer = _mapper.Map<CustomerDto>(_customerRepository.Encrypt(chuoimahoa, customerid));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Ok(customer);
-        }
+        //[HttpGet("Customerid/password")]
+        //[ProducesResponseType(200)]
+        //[ProducesResponseType(400)]
+        //public IActionResult Getpass(string chuoimahoa ,string customerid)
+        //{
+        //    if (!_customerRepository.CustomerExits(customerid))
+        //    {
+        //        return NotFound();
+        //    }
+        //    var customer = _mapper.Map<CustomerDto>(_customerRepository.Encrypt(chuoimahoa, customerid));
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+        //    return Ok(customer);
+        //}
     }
 }
