@@ -1,6 +1,8 @@
 ﻿using API_SWP.Data;
 using API_SWP.Interface;
 using API_SWP.Model;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace API_SWP.Repository
 {
@@ -36,7 +38,7 @@ namespace API_SWP.Repository
 
         public ICollection<ConstructionPriceQuotation> GetConstructionPriceQuotations()
         {
-            return _context.ConstructionPriceQuotations.OrderBy(p => p.ConstructionReceived).ToList();
+            return _context.ConstructionPriceQuotations.OrderBy(p => p.QuotationId).ToList();
         }
 
         public string GetStatus(string id)

@@ -4,6 +4,7 @@ using API_SWP.Interface;
 using API_SWP.Model;
 using API_SWP.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API_SWP.Controllers
 {
@@ -23,11 +24,25 @@ namespace API_SWP.Controllers
             _requestRepository = requestRepository;
             _staffRepository = staffRepository;
         }
-        [HttpGet("GetAll")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<ConstructionPriceQuotation>))]
+        [HttpGet("GetAllQuotation")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ConstructionPriceQuotationDto>))]
         public IActionResult GetConstructionPriceQuotations()
         {
             var constructionPriceQuotation = _mapper.Map<List<ConstructionPriceQuotationDto>>(_constructionPriceQuotationRepository.GetConstructionPriceQuotations());
+
+            List<RequestDto> request = _mapper.Map<List<RequestDto>>(_requestRepository.GetRequests());
+
+            foreach (var item in constructionPriceQuotation)
+            {
+                foreach (var req in request)
+                {
+                    if (item.QuotationId.Equals(req.QuotationId))
+                    {
+                        item.Requests.Add(req);
+                    }
+                }
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -35,7 +50,7 @@ namespace API_SWP.Controllers
             return Ok(constructionPriceQuotation);
         }
         [HttpGet("GetConstructionPriceQuotationById")]
-        [ProducesResponseType(200, Type = typeof(ConstructionPriceQuotation))]
+        [ProducesResponseType(200, Type = typeof(ConstructionPriceQuotationDto))]
         [ProducesResponseType(400)]
         public IActionResult GetConstructionPriceQuotation(string id)
         {
@@ -43,7 +58,18 @@ namespace API_SWP.Controllers
             {
                 return NotFound();
             }
+
             var constructionPriceQuotation = _mapper.Map<ConstructionPriceQuotationDto>(_constructionPriceQuotationRepository.GetConstructionPriceQuotation(id));
+
+            List<RequestDto> request = _mapper.Map<List<RequestDto>>(_requestRepository.GetRequests());
+            foreach (var req in request)
+            {
+                if (constructionPriceQuotation.QuotationId.Equals(req.QuotationId))
+                {
+                    constructionPriceQuotation.Requests.Add(req);
+                }
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

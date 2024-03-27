@@ -52,7 +52,7 @@ namespace API_SWP.Controllers
         }
 
         [HttpGet("GetAdminByMail")]
-        [ProducesResponseType(200, Type = typeof(AdminModel))]
+        [ProducesResponseType(200, Type = typeof(Admin))]
         [ProducesResponseType(400)]
         public IActionResult GetAdminByEmail(string AdminEmail)
         {
@@ -61,7 +61,6 @@ namespace API_SWP.Controllers
             {
                 return BadRequest(ModelState);
             }
-            //return Ok(Json(result).Value);
             return Ok(admin);
         }
 
