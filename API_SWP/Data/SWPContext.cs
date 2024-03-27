@@ -146,10 +146,6 @@ namespace API_SWP.Data
                     .HasMaxLength(50)
                     .HasColumnName("Customer's name");
 
-                entity.Property(e => e.LoginName)
-                    .HasMaxLength(50)
-                    .HasColumnName("Login name");
-
                 entity.Property(e => e.Password).HasMaxLength(50);
 
                 entity.Property(e => e.PhoneNumber)

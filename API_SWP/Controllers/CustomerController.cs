@@ -112,13 +112,13 @@ namespace API_SWP.Controllers
 
             var customerMap = _mapper.Map<Customer>(createCustomer);
             customerMap.PhoneNumber = "";
+
             do
             {
-                Random rnd = new Random();
+                Random rnd = new ();
                 customerMap.CustomerSId = rnd.Next(1, 10000).ToString();
                     
             } while (_customerRepository.CustomerExits(customerMap.CustomerSId) == true);
-            customerMap.LoginName = "";
             
 
             if (!_customerRepository.CreateCustomer(customerMap))
