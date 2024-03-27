@@ -80,7 +80,7 @@ namespace API_SWP.Controllers
         {
             if (ConstructionPriceQuotationCreate == null) return BadRequest(ModelState);
 
-            var Quotation = _constructionPriceQuotationRepository.GetConstructionPriceQuotations().Where(p => p.RequestId == ConstructionPriceQuotationCreate.RequestId).FirstOrDefault();
+            var Quotation = _constructionPriceQuotationRepository.GetConstructionPriceQuotations().Where(p => p.QuotationId == ConstructionPriceQuotationCreate.QuotationId).FirstOrDefault();
 
             if (Quotation != null)
             {
@@ -116,7 +116,7 @@ namespace API_SWP.Controllers
             var quotationMap = _mapper.Map<ConstructionPriceQuotation>(quotationUpdate);
             quotationMap.QuotationId = quotationId;
             quotationMap.StaffId = _constructionPriceQuotationRepository.GetConstructionPriceQuotation(quotationId).StaffId;
-            quotationMap.RequestId = _constructionPriceQuotationRepository.GetConstructionPriceQuotation(quotationId).RequestId;
+            
             if (!_constructionPriceQuotationRepository.UpdateCostructionPriceQuotation(quotationMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
 
 namespace API_SWP.Model
 {
@@ -8,7 +7,7 @@ namespace API_SWP.Model
     {
         public Customer()
         {
-            Requests = new HashSet<Request>();
+            Quotations = new HashSet<ConstructionPriceQuotation>();
         }
 
         public string CustomerSId { get; set; } = null!;
@@ -17,6 +16,7 @@ namespace API_SWP.Model
         public string LoginName { get; set; } = null!;
         public string Password { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
-        public virtual ICollection<Request> Requests { get; set; }
+
+        public virtual ICollection<ConstructionPriceQuotation> Quotations { get; set; }
     }
 }

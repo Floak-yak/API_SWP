@@ -18,7 +18,11 @@ namespace API_SWP.Repository
             _context.Add(post);
             return Save();
         }
-
+        public List<Post> GetAllPostsWithImageInfo()
+        {
+            List<Post> posts = _context.Posts.ToList();
+            return posts;
+        }
         public Post GetPost(string id)
         {
             return _context.Posts.Where(p => p.PostSId == id).FirstOrDefault();

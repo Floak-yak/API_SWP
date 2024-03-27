@@ -10,9 +10,10 @@ namespace API_SWP.Model
             Requests = new HashSet<Request>();
         }
 
-        public string TypeName { get; set; } = null!;
-        public double? Price { get; set; }
         public string TypeId { get; set; } = null!;
+        public string TypeName { get; set; } = null!;
+        public double? PriceEstimateCaculateType { get; set; }
+        public string Description { get; set; } = null!;
 
         public virtual ICollection<Request> Requests { get; set; }
     }

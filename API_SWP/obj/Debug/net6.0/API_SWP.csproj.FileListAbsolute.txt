@@ -179,3 +179,7 @@ Z:\SUMMER2024\SWP391\API_SWP\API_SWP\obj\Debug\net6.0\scopedcss\bundle\API_SWP.s
 Z:\SUMMER2024\SWP391\API_SWP\API_SWP\obj\Debug\net6.0\API_SWP.csproj.CopyComplete
 Z:\SUMMER2024\SWP391\API_SWP\API_SWP\obj\Debug\net6.0\API_SWP.genruntimeconfig.cache
 Z:\SUMMER2024\SWP391\API_SWP\API_SWP\obj\Debug\net6.0\ref\API_SWP.dll
+Z:\SUMMER2024\SWP391\API_SWP\API_SWP\bin\Debug\net6.0\JWT.dll
+Z:\SUMMER2024\SWP391\API_SWP\API_SWP\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+Z:\SUMMER2024\SWP391\API_SWP\API_SWP\bin\Debug\net6.0\Newtonsoft.Json.dll
+Z:\SUMMER2024\SWP391\API_SWP\API_SWP\bin\Debug\net6.0\System.Text.Json.dll

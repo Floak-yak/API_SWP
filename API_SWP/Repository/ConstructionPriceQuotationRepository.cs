@@ -29,11 +29,6 @@ namespace API_SWP.Repository
             return Save();
         }
 
-        public string GetAdvise(string id)
-        {
-            return _context.ConstructionPriceQuotations.Where(p => p.QuotationId == id).FirstOrDefault().Advise;
-        }
-
         public ConstructionPriceQuotation GetConstructionPriceQuotation(string id)
         {
             return _context.ConstructionPriceQuotations.Where(p => p.QuotationId == id).FirstOrDefault();
@@ -42,31 +37,6 @@ namespace API_SWP.Repository
         public ICollection<ConstructionPriceQuotation> GetConstructionPriceQuotations()
         {
             return _context.ConstructionPriceQuotations.OrderBy(p => p.ConstructionReceived).ToList();
-        }
-
-        public string GetCustomerComment(string id)
-        {
-            return _context.ConstructionPriceQuotations.Where(p => p.QuotationId == id).Select(p => p.CustomerComment).ToString();
-        }
-
-        public string GetHouseType(string id)
-        {
-            return _context.ConstructionPriceQuotations.Where(p => p.QuotationId == id).Select(p => p.HouseSType).ToString();
-        }
-
-        public string GetPayment(string id)
-        {  
-            return _context.ConstructionPriceQuotations.Where(p => p.QuotationId == id).Select(p => p.Payment).ToString();
-        }
-
-        public double GetPrice(string id)
-        {
-            return _context.ConstructionPriceQuotations.Where(p => p.QuotationId == id).Select(p => p.Price).FirstOrDefault();
-        }
-
-        public string GetProductName(string id)
-        {
-            return _context.ConstructionPriceQuotations.Where(p => p.QuotationId == id).Select(p => p.Product).ToString();
         }
 
         public string GetStatus(string id)
