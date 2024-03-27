@@ -90,7 +90,7 @@ namespace API_SWP.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var RequestMap = _mapper.Map<Request>(Request);
-            RequestMap.Customer = _customerRepository.GetCustomerById(CustomerId);
+            //RequestMap. = _customerRepository.GetCustomerById(CustomerId);
 
             if (!_requestRepository.CreateRequest(RequestMap))
             {
@@ -113,9 +113,9 @@ namespace API_SWP.Controllers
 
             var requestMap = _mapper.Map<Request>(UpdateRequest);
             requestMap.RequestId = RequestId;
-            requestMap.Date = _requestRepository.GetRequestById(RequestId).Date;
-            requestMap.CustomerPhone = _requestRepository.GetRequestById(RequestId).CustomerPhone;
-            requestMap.CustomerId = _requestRepository.GetRequestById(RequestId).CustomerId;
+            //requestMap.Date = _requestRepository.GetRequestById(RequestId).Date;
+            //requestMap.CustomerPhone = _requestRepository.GetRequestById(RequestId).CustomerPhone;
+            //requestMap.CustomerId = _requestRepository.GetRequestById(RequestId).CustomerId;
 
             if (!_requestRepository.UpdateRequest(requestMap))
             {

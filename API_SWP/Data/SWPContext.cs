@@ -27,7 +27,7 @@ namespace API_SWP.Data
         public virtual DbSet<Request> Requests { get; set; } = null!;
         public virtual DbSet<TypeOfHouse> TypeOfHouses { get; set; } = null!;
         public virtual DbSet<Unit> Units { get; set; } = null!;
-        public virtual DbSet<Staff> staff { get; set; } = null!;
+        public virtual DbSet<Staff> Staff { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 => optionsBuilder.UseSqlServer(GetConnectionString());

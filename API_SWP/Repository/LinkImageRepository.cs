@@ -12,17 +12,17 @@ namespace API_SWP.Repository
         {
             _context = context;
         }
-        ICollection<LinkImage> GetLinkImageByPostId(string PostId)
+        ICollection<PostImg> GetLinkImageByPostId(string PostId)
         {
-            return _context.LinkImages.Where(p => p.PostId == PostId).OrderBy(p => p.PostId).ToList();
+            return _context.PostImgs.Where(p => p.PostId == PostId).OrderBy(p => p.PostId).ToList();
         }
 
-        ICollection<LinkImage> ILinkImageRepository.GetLinkImageByPostId(string PostId)
+        ICollection<PostImg> ILinkImageRepository.GetLinkImageByPostId(string PostId)
         {
             throw new NotImplementedException();
         }
 
-        ICollection<LinkImage> ILinkImageRepository.GetLinkImages()
+        ICollection<PostImg> ILinkImageRepository.GetLinkImages()
         {
             throw new NotImplementedException();
         }

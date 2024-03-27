@@ -4,7 +4,7 @@ namespace API_SWP.Interface
 {
     public interface ILinkImageRepository
     {
-        ICollection<LinkImage> GetLinkImages();
-        ICollection<LinkImage> GetLinkImageByPostId(string PostId);
+        ICollection<PostImg> GetLinkImages();
+        ICollection<PostImg> GetLinkImageByPostId(string PostId);
     }
 }

@@ -38,7 +38,7 @@ builder.Services.AddTransient<IAdminRepository, AdminRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
-builder.Services.AddDbContext<SWPContext1>(options => { options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); });
+builder.Services.AddDbContext<SWPContext>(options => { options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); });
 
 var app = builder.Build();
 

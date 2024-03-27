@@ -99,7 +99,6 @@ Z:\SUMMER2024\SWP391\API_SWP\API_SWP\obj\Debug\net6.0\API_SWP.sourcelink.json
 Z:\SUMMER2024\SWP391\API_SWP\API_SWP\obj\Debug\net6.0\API_SWP.dll
 Z:\SUMMER2024\SWP391\API_SWP\API_SWP\obj\Debug\net6.0\refint\API_SWP.dll
 Z:\SUMMER2024\SWP391\API_SWP\API_SWP\obj\Debug\net6.0\API_SWP.pdb
-Z:\SUMMER2024\SWP391\API_SWP\API_SWP\bin\Debug\net6.0\appsettings.Development.json
 Z:\SUMMER2024\SWP391\API_SWP\API_SWP\bin\Debug\net6.0\appsettings.json
 Z:\SUMMER2024\SWP391\API_SWP\API_SWP\bin\Debug\net6.0\API_SWP.exe
 Z:\SUMMER2024\SWP391\API_SWP\API_SWP\bin\Debug\net6.0\API_SWP.deps.json

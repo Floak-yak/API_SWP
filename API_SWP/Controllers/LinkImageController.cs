@@ -17,7 +17,7 @@ namespace API_SWP.Controllers
             _linkImageRepository = linkImageRepository;
         }
         [HttpGet("GetAll")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<LinkImage>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<PostImg>))]
         public IActionResult GetPosts(string postId)
         {
             var post = _linkImageRepository.GetLinkImageByPostId(postId);
