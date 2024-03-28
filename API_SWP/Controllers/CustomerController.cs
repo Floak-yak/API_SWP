@@ -50,7 +50,7 @@ namespace API_SWP.Controllers
         [HttpGet("GetCustomerByName")]
         [ProducesResponseType(200, Type = typeof(CustomerDto))]
         [ProducesResponseType(400)]
-        public IActionResult GetAdminByEmail(string customerName)
+        public IActionResult GetCustomerByName(string customerName)
         {
             var customers = _mapper.Map<List<CustomerDto>>(_customerRepository.GetCustomerByName(customerName));
             if (!ModelState.IsValid)

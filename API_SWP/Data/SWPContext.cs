@@ -29,6 +29,7 @@ namespace API_SWP.Data
         public virtual DbSet<TypeOfHouse> TypeOfHouses { get; set; } = null!;
         public virtual DbSet<Unit> Units { get; set; } = null!;
         public virtual DbSet<Staff> Staff { get; set; } = null!;
+        public virtual DbSet<UrlPath> UrlPath { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -390,7 +391,28 @@ namespace API_SWP.Data
                     .HasColumnName("Staff's name");
             });
 
-            OnModelCreatingPartial(modelBuilder);
+            modelBuilder.Entity<UrlPath>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("UrlPath");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Imgurl).HasColumnName("imgurl");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(100)
+                    .HasColumnName("title");
+
+                entity.Property(e => e.Url).HasColumnName("url");
+
+                entity.Property(e => e.UrlId)
+                    .HasMaxLength(10)
+                    .HasColumnName("Url_Id");
+            });
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

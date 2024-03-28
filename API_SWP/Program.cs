@@ -23,6 +23,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 //    };
 //});
+builder.Services.AddScoped<IUrlPathRepository, UrlPathRepository>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IStaffRepository, StaffRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
