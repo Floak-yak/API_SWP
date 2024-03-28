@@ -80,7 +80,7 @@ namespace API_SWP.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteStaff(string ConstructionPriceQuotatonId)
+        public IActionResult DeleteQuotation(string ConstructionPriceQuotatonId)
         {
             if (!_constructionPriceQuotationRepository.ConstructionPriceQuotationExist(ConstructionPriceQuotatonId))
             {
@@ -88,7 +88,14 @@ namespace API_SWP.Controllers
             }
 
             var constructionReceivedToDelete = _constructionPriceQuotationRepository.GetConstructionPriceQuotation(ConstructionPriceQuotatonId);
-
+            var request = _requestRepository.GetRequests();
+            foreach (var req in request)
+            {
+                if (req.QuotationId == ConstructionPriceQuotatonId)
+                {
+                    _requestRepository.RemoveRequest(req);
+                }
+            }
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
