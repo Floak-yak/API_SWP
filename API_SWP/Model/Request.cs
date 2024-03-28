@@ -7,6 +7,7 @@ namespace API_SWP.Model
     {
         public Request()
         {
+            Combos = new HashSet<ComboDesign>();
             Types = new HashSet<TypeOfHouse>();
             Units = new HashSet<Unit>();
         }
@@ -16,9 +17,12 @@ namespace API_SWP.Model
         public double? Size { get; set; }
         public string Unit { get; set; } = null!;
         public string QuotationId { get; set; } = null!;
+        public double? UnitPrice { get; set; }
+        public string? Describe { get; set; }
 
         public virtual ConstructionPriceQuotation Quotation { get; set; } = null!;
 
+        public virtual ICollection<ComboDesign> Combos { get; set; }
         public virtual ICollection<TypeOfHouse> Types { get; set; }
         public virtual ICollection<Unit> Units { get; set; }
     }

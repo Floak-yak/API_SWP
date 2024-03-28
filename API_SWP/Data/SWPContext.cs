@@ -18,6 +18,7 @@ namespace API_SWP.Data
         }
 
         public virtual DbSet<Admin> Admins { get; set; } = null!;
+        public virtual DbSet<ComboDesign> ComboDesigns { get; set; } = null!;
         public virtual DbSet<ConstructionPriceQuotation> ConstructionPriceQuotations { get; set; } = null!;
         public virtual DbSet<ConstructionReceived> ConstructionReceiveds { get; set; } = null!;
         public virtual DbSet<Customer> Customers { get; set; } = null!;
@@ -64,6 +65,25 @@ namespace API_SWP.Data
                     .HasColumnName("Admin's password");
             });
 
+            modelBuilder.Entity<ComboDesign>(entity =>
+            {
+                entity.HasKey(e => e.ComboId);
+
+                entity.ToTable("comboDesign");
+
+                entity.Property(e => e.ComboId).HasMaxLength(10);
+
+                entity.Property(e => e.Describe).HasMaxLength(200);
+
+                entity.Property(e => e.TypeName).HasMaxLength(100);
+
+                entity.Property(e => e.Unit)
+                    .HasMaxLength(100)
+                    .HasColumnName("unit");
+
+                entity.Property(e => e.UnitPrice).HasColumnName("unit_price");
+            });
+
             modelBuilder.Entity<ConstructionPriceQuotation>(entity =>
             {
                 entity.HasKey(e => e.QuotationId);
@@ -95,6 +115,8 @@ namespace API_SWP.Data
                 entity.Property(e => e.StaffId)
                     .HasMaxLength(10)
                     .HasColumnName("Staff Id");
+
+                entity.Property(e => e.Status).HasMaxLength(50);
 
                 entity.HasOne(d => d.Staff)
                     .WithMany(p => p.ConstructionPriceQuotations)
@@ -249,7 +271,9 @@ namespace API_SWP.Data
 
                 entity.Property(e => e.RequestId)
                     .HasMaxLength(10)
-                    .HasColumnName("Request ID");
+                    .HasColumnName("RequestID");
+
+                entity.Property(e => e.Describe).HasMaxLength(100);
 
                 entity.Property(e => e.HouseSType)
                     .HasMaxLength(100)
@@ -259,11 +283,30 @@ namespace API_SWP.Data
 
                 entity.Property(e => e.Unit).HasMaxLength(100);
 
+                entity.Property(e => e.UnitPrice).HasColumnName("Unit_price");
+
                 entity.HasOne(d => d.Quotation)
                     .WithMany(p => p.Requests)
                     .HasForeignKey(d => d.QuotationId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Request_Construction price quotation");
+
+                entity.HasMany(d => d.Combos)
+                    .WithMany(p => p.Requests)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "ReqCom",
+                        l => l.HasOne<ComboDesign>().WithMany().HasForeignKey("ComboId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Req_Com_comboDesign"),
+                        r => r.HasOne<Request>().WithMany().HasForeignKey("RequestId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Req_Com_Request"),
+                        j =>
+                        {
+                            j.HasKey("RequestId", "ComboId").HasName("PK_Request_Combo");
+
+                            j.ToTable("Req_Com");
+
+                            j.IndexerProperty<string>("RequestId").HasMaxLength(10);
+
+                            j.IndexerProperty<string>("ComboId").HasMaxLength(10);
+                        });
             });
 
             modelBuilder.Entity<TypeOfHouse>(entity =>
@@ -274,8 +317,6 @@ namespace API_SWP.Data
 
                 entity.Property(e => e.TypeId).HasMaxLength(10);
 
-                entity.Property(e => e.Description).HasMaxLength(100);
-
                 entity.Property(e => e.TypeName)
                     .HasMaxLength(100)
                     .HasColumnName("Type name");
@@ -284,7 +325,7 @@ namespace API_SWP.Data
                     .WithMany(p => p.Types)
                     .UsingEntity<Dictionary<string, object>>(
                         "TypeRequest",
-                        l => l.HasOne<Request>().WithMany().HasForeignKey("RequestId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Type_Request_Request1"),
+                        l => l.HasOne<Request>().WithMany().HasForeignKey("RequestId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Type_Request_Request"),
                         r => r.HasOne<TypeOfHouse>().WithMany().HasForeignKey("TypeId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Type_Request_Type of house"),
                         j =>
                         {
@@ -318,7 +359,7 @@ namespace API_SWP.Data
                         {
                             j.HasKey("UnitId", "RequestId").HasName("PK_R_T");
 
-                            j.ToTable("REQUEST_UNIT");
+                            j.ToTable("Request_unit");
 
                             j.IndexerProperty<string>("UnitId").HasMaxLength(10);
 

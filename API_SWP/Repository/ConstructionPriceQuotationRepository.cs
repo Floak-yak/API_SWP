@@ -43,14 +43,14 @@ namespace API_SWP.Repository
 
         public string GetStatus(string id)
         {
-            int status = _context.ConstructionPriceQuotations.Where(p=>p.QuotationId==id).Select(p => p.Status).FirstOrDefault();
-            if (status == 1)
+            string status = _context.ConstructionPriceQuotations.Where(p=>p.QuotationId==id).Select(p => p.Status).FirstOrDefault();
+            if (status == "Quatation has been done")
             {
-                return "Quatation has been done";
+                return status;
             }
-            if (status == 0)
+            if (status == "Still on going")
             {
-                return "Still on going";
+                return status;
             }
             else return "On the way";
         }

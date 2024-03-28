@@ -12,7 +12,7 @@ namespace API_SWP.Model
         }
 
         public string QuotationId { get; set; } = null!;
-        public int Status { get; set; }
+        public string Status { get; set; } = null!;
         public string StaffId { get; set; } = null!;
         public string CustomerName { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
