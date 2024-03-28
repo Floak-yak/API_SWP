@@ -44,7 +44,7 @@ namespace API_SWP.Repository
         public string GetStatus(string id)
         {
             string status = _context.ConstructionPriceQuotations.Where(p=>p.QuotationId==id).Select(p => p.Status).FirstOrDefault();
-            if (status == "Quatation has been done")
+            if (status == "Quotation has been done")
             {
                 return status;
             }

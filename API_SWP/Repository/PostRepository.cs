@@ -32,6 +32,11 @@ namespace API_SWP.Repository
             return _context.Posts.OrderBy(p => p.PostSId).ToList();
         }
 
+        public List<Post> getPostWithTitle(string title)
+        {
+            return _context.Posts.Where(p => p.Title.Contains(title)).ToList();
+        }
+
         public bool PostExits(string id)
         {
             return _context.Posts.Any(p => p.PostSId == id);

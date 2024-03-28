@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using API_SWP.Dto;
 using API_SWP.Model;
+using API_SWP.ViewModel;
 
 namespace API_SWP.Helper
 {

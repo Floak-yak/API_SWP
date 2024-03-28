@@ -5,6 +5,7 @@ using API_SWP.Model;
 using API_SWP.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using API_SWP.ViewModel;
 
 namespace API_SWP.Controllers
 {
@@ -109,22 +110,36 @@ namespace API_SWP.Controllers
         [HttpPost("Create")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult Create([FromQuery] string StaffId, [FromBody] ConstructionPriceQuotationDto ConstructionPriceQuotationCreate)
+        public IActionResult Create([FromQuery] string StaffId, string customerId, [FromBody] ConstructionPriceQuotationCreateModel ConstructionPriceQuotationCreate)
         {
             if (ConstructionPriceQuotationCreate == null) return BadRequest(ModelState);
 
-            var Quotation = _constructionPriceQuotationRepository.GetConstructionPriceQuotations().Where(p => p.QuotationId == ConstructionPriceQuotationCreate.QuotationId).FirstOrDefault();
+            //var Quotation = _constructionPriceQuotationRepository.GetConstructionPriceQuotations().Where(p => p.QuotationId == ConstructionPriceQuotationCreate.QuotationId).FirstOrDefault();
 
-            if (Quotation != null)
-            {
-                ModelState.AddModelError("", "Quotation already exists");
-                return StatusCode(442, ModelState);
-            }
+            //if (Quotation != null)
+            //{
+            //    ModelState.AddModelError("", "Quotation already exists");
+            //    return StatusCode(442, ModelState);
+            //}
 
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var QuotationMap = _mapper.Map<ConstructionPriceQuotation>(ConstructionPriceQuotationCreate);
             QuotationMap.Staff = _staffRepository.GetStaff(StaffId);
+            QuotationMap.StaffId = StaffId;
+            QuotationMap.CustomerId = customerId;
+            QuotationMap.Status = "Still on going";
+            QuotationMap.QuotationDate = DateTime.Now;
+            Random rnd = new();
+            do
+            {
+                rnd = new();
+                QuotationMap.QuotationId = rnd.Next(1, 10000).ToString();
+
+            } while (_constructionPriceQuotationRepository.ConstructionPriceQuotationExist(QuotationMap.QuotationId) == true);
+
+            var RequestMap = _mapper.Map<Request>(ConstructionPriceQuotationCreate.Requests);
+            RequestMap.QuotationId = rnd.ToString();
 
             if (!_constructionPriceQuotationRepository.CreateCostructionPriceQuotation(QuotationMap))
             {

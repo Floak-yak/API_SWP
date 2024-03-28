@@ -4,6 +4,7 @@ using API_SWP.Interface;
 using API_SWP.Model;
 using API_SWP.Repository;
 using Microsoft.AspNetCore.Mvc;
+using API_SWP.ViewModel;
 
 namespace API_SWP.Controllers
 {
@@ -22,7 +23,7 @@ namespace API_SWP.Controllers
             _staffRepository = staffRepository;
         }
         [HttpGet("GetAll")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Post>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<PostDto>))]
         public IActionResult GetPosts()
         {
             var post = _mapper.Map<List<PostDto>>(_postRepository.GetPosts());
@@ -137,6 +138,18 @@ namespace API_SWP.Controllers
         public IActionResult getPostWithImage()
         {
             var post = _mapper.Map<List<Post>>(_postRepository.GetPosts());
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(post);
+        }
+        [HttpGet("GetPostWithTitle")]
+        [ProducesResponseType(200, Type = typeof(PostDto))]
+        [ProducesResponseType(400)]
+        public IActionResult getPostWithTitle(string postTitle)
+        {
+            var post = _mapper.Map<List<PostDto>>(_postRepository.getPostWithTitle(postTitle));
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

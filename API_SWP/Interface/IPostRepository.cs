@@ -4,6 +4,7 @@ namespace API_SWP.Interface
 {
     public interface IPostRepository
     {
+        List<Post> getPostWithTitle(string title);
         ICollection<Post> GetPosts();
         Post GetPost(string id);
         bool PostExits(string id);
