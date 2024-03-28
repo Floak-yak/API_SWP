@@ -9,6 +9,8 @@ namespace API_SWP.Helper
     {
         public MappingProfiles()
         {
+            CreateMap<ConstructionPriceQuotation, ConstructionPriceQuotationCreateModel>();
+            CreateMap<ConstructionPriceQuotationCreateModel, ConstructionPriceQuotation>();
             CreateMap<Customer, CustomerUpdateModel>();
             CreateMap<CustomerUpdateModel, Customer>();
             CreateMap<ConstructionPriceQuotation, ConstructionPriceQuotationUpdateModel>();
@@ -17,6 +19,8 @@ namespace API_SWP.Helper
             CreateMap<ConstructionReceivedUpdateModel, ConstructionReceived>();
             CreateMap<Post, PostUpdateModel>();
             CreateMap<PostUpdateModel, Post>();
+            CreateMap<Request, RequestCreateModel>();
+            CreateMap<RequestCreateModel, Request>();
             CreateMap<Request, RequestUpdateModel>();
             CreateMap<RequestUpdateModel, Request>();
             CreateMap<StaffUpdateModel, Staff>();

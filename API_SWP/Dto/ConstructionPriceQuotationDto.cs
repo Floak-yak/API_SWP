@@ -9,7 +9,7 @@ namespace API_SWP.Dto
             Requests = new HashSet<RequestDto>();
         }
         public string QuotationId { get; set; } = null!;
-        public int Status { get; set; }
+        public string Status { get; set; }
         public string StaffId { get; set; } = null!;
         public string CustomerName { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;

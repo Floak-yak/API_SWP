@@ -134,12 +134,20 @@ namespace API_SWP.Controllers
             do
             {
                 rnd = new();
-                QuotationMap.QuotationId = rnd.Next(1, 10000).ToString();
+                QuotationMap.QuotationId = rnd.Next(1, 1000000).ToString();
 
             } while (_constructionPriceQuotationRepository.ConstructionPriceQuotationExist(QuotationMap.QuotationId) == true);
 
-            var RequestMap = _mapper.Map<Request>(ConstructionPriceQuotationCreate.Requests);
-            RequestMap.QuotationId = rnd.ToString();
+            var RequestMap = ConstructionPriceQuotationCreate.Requests;
+            foreach (var Request in RequestMap)
+            {
+                Request.QuotationId = rnd.ToString();
+                do
+                {
+                    Request.RequestId = rnd.Next(1, 1000000).ToString();
+
+                } while (_requestRepository.RequestExists(Request.RequestId) == true);
+            }
 
             if (!_constructionPriceQuotationRepository.CreateCostructionPriceQuotation(QuotationMap))
             {

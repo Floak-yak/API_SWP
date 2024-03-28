@@ -7,5 +7,7 @@
         public double? Size { get; set; }
         public string Unit { get; set; } = null!;
         public string QuotationId { get; set; } = null!;
+        public double? UnitPrice { get; set; }
+        public string? Describe { get; set; }
     }
 }
