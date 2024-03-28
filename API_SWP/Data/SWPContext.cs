@@ -30,7 +30,10 @@ namespace API_SWP.Data
         public virtual DbSet<Staff> Staff { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-=> optionsBuilder.UseSqlServer(GetConnectionString());
+        {
+            optionsBuilder.UseSqlServer(GetConnectionString(), options => options.EnableRetryOnFailure());
+
+        }
 
         private string? GetConnectionString()
         {
