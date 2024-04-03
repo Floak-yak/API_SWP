@@ -110,23 +110,15 @@ namespace API_SWP.Controllers
         [HttpPost("Create")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult Create([FromQuery] string StaffId, string customerId, [FromBody] ConstructionPriceQuotationCreateModel ConstructionPriceQuotationCreate)
+        public IActionResult Create([FromQuery] string customerId, [FromBody] ConstructionPriceQuotationCreateModel ConstructionPriceQuotationCreate)
         {
             if (ConstructionPriceQuotationCreate == null) return BadRequest(ModelState);
-
-            //var Quotation = _constructionPriceQuotationRepository.GetConstructionPriceQuotations().Where(p => p.QuotationId == ConstructionPriceQuotationCreate.QuotationId).FirstOrDefault();
-
-            //if (Quotation != null)
-            //{
-            //    ModelState.AddModelError("", "Quotation already exists");
-            //    return StatusCode(442, ModelState);
-            //}
 
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var QuotationMap = _mapper.Map<ConstructionPriceQuotation>(ConstructionPriceQuotationCreate);
-            QuotationMap.Staff = _staffRepository.GetStaff(StaffId);
-            QuotationMap.StaffId = StaffId;
+            QuotationMap.Staff = _staffRepository.GetStaff("1");
+            QuotationMap.StaffId = "1";
             QuotationMap.CustomerId = customerId;
             QuotationMap.Status = "Still on going";
             QuotationMap.QuotationDate = DateTime.Now;
@@ -138,17 +130,20 @@ namespace API_SWP.Controllers
 
             } while (_constructionPriceQuotationRepository.ConstructionPriceQuotationExist(QuotationMap.QuotationId) == true);
 
-            var RequestMap = ConstructionPriceQuotationCreate.Requests;
+            var RequestMap = _mapper.Map<List<RequestDto>>(ConstructionPriceQuotationCreate.Requests);
+            string currentDay = DateTime.Now.Day.ToString();
+            string currentMonth = DateTime.Now.Month.ToString();
+            string currentYear = DateTime.Now.Year.ToString();
             foreach (var Request in RequestMap)
             {
                 Request.QuotationId = rnd.ToString();
                 do
                 {
-                    Request.RequestId = rnd.Next(1, 1000000).ToString();
+                    Request.RequestId = currentDay + "." + currentMonth + "." + currentYear + ".ID." + rnd.Next(1, 1000000).ToString();
 
                 } while (_requestRepository.RequestExists(Request.RequestId) == true);
             }
-
+            QuotationMap.Requests = _mapper.Map<List<Request>>(RequestMap);
             if (!_constructionPriceQuotationRepository.CreateCostructionPriceQuotation(QuotationMap))
             {
                 ModelState.AddModelError("", "Something went wrong when saving");

@@ -95,7 +95,7 @@ namespace API_SWP.Data
                     .HasMaxLength(10)
                     .HasColumnName("Quotation ID");
 
-                entity.Property(e => e.CustomerId).HasMaxLength(10);
+                entity.Property(e => e.CustomerId).HasMaxLength(50);
 
                 entity.Property(e => e.CustomerName)
                     .HasMaxLength(50)
@@ -161,7 +161,7 @@ namespace API_SWP.Data
                 entity.ToTable("Customer");
 
                 entity.Property(e => e.CustomerSId)
-                    .HasMaxLength(10)
+                    .HasMaxLength(50)
                     .HasColumnName("Customer's Id");
 
                 entity.Property(e => e.CustomerEmail)
@@ -190,7 +190,7 @@ namespace API_SWP.Data
 
                             j.ToTable("Cus_Con");
 
-                            j.IndexerProperty<string>("CustomerId").HasMaxLength(10);
+                            j.IndexerProperty<string>("CustomerId").HasMaxLength(50);
 
                             j.IndexerProperty<string>("QuotationId").HasMaxLength(10);
                         });

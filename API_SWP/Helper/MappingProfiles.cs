@@ -9,6 +9,8 @@ namespace API_SWP.Helper
     {
         public MappingProfiles()
         {
+            CreateMap<RequestDto, RequestCreateModel>();
+            CreateMap<RequestCreateModel, RequestDto>();
             CreateMap<ConstructionPriceQuotation, ConstructionPriceQuotationCreateModel>();
             CreateMap<ConstructionPriceQuotationCreateModel, ConstructionPriceQuotation>();
             CreateMap<Customer, CustomerUpdateModel>();

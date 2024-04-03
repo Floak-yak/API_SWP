@@ -6,11 +6,11 @@ namespace API_SWP.ViewModel
     {
         public ConstructionPriceQuotationCreateModel()
         {
-            Requests = new HashSet<RequestDto>();
+            Requests = new HashSet<RequestCreateModel>();
         }
         public string CustomerName { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public string ProjectAddress { get; set; } = null!;
-        public virtual ICollection<RequestDto> Requests { get; set; }
+        public virtual ICollection<RequestCreateModel> Requests { get; set; }
     }
 }

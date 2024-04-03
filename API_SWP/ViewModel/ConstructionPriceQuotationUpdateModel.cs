@@ -2,6 +2,7 @@
 {
     public class ConstructionPriceQuotationUpdateModel
     {
-        public int Status { get; set; }
+        public string Status { get; set; } = null!;
+        public string StaffId { get; set; } = null!;
     }
 }
