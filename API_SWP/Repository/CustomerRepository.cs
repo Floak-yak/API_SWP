@@ -20,6 +20,10 @@ namespace API_SWP.Repository
         {
             return _context.Customers.SingleOrDefault(p => p.CustomerEmail == email && p.Password == password);
         }
+        public bool CheckLoginForCustomerB(string email, string password)
+        {
+            return _context.Customers.Any(p => p.CustomerEmail == email && p.Password == password);
+        }
 
         public bool CreateCustomer(Customer customer)
         {

@@ -19,7 +19,11 @@ namespace API_SWP.Repository
 
         public Admin CheckLoginForAdmin(string adminMail, string adminPassword)
         {
-            return _context.Admins.SingleOrDefault(p => p.AdminSMail == adminMail && p.AdminSPassword == adminPassword);
+            return _context.Admins.Where(p => p.AdminSMail == adminMail && p.AdminSPassword == adminPassword).SingleOrDefault();
+        }
+        public bool CheckLoginForAdminB(string adminMail, string adminPassword)
+        {
+            return _context.Admins.Any(p => p.AdminSMail == adminMail && p.AdminSPassword == adminPassword);
         }
 
         public bool CreateAdmin(Admin admin)
@@ -34,6 +38,11 @@ namespace API_SWP.Repository
             Admin admin = new () { AdminSPassword = add.AdminSPassword, AdminSMail = add.AdminSMail };
             //return _context.Admins.Where(p => p.AdminSId.Equals(id)).FirstOrDefault();
             return admin;
+        }
+
+        public Admin GetAdminByEmail(string email)
+        {
+            return _context.Admins.SingleOrDefault(p => p.AdminSMail == email);
         }
 
         public List<Admin> GetAdminByName(string adminMail)
