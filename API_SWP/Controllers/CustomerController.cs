@@ -5,6 +5,7 @@ using API_SWP.Model;
 using API_SWP.Repository;
 using Microsoft.AspNetCore.Mvc;
 using API_SWP.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_SWP.Controllers
 {
@@ -20,7 +21,7 @@ namespace API_SWP.Controllers
             _customerRepository = customerRepository;
             _mapper = mapper;
         }
-        [HttpGet]
+        [HttpGet("GetAllCustomerInformation"), Authorize(Roles = "Admin")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Customer>))]
         public IActionResult GetCustomer()
         {

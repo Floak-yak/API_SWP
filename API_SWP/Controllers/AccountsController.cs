@@ -30,17 +30,6 @@ namespace API_SWP.Controllers
             _staffRepository = staffRepository;
         }
 
-
-        //[HttpPost("register")]
-        //public async Task<ActionResult<User>> Register(UserDto request)
-        //{
-
-        //    user.Email = request.Email;
-        //    user.Password = request.Password;
-
-        //    return Ok(user);
-        //}
-
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserDto request)
         {
@@ -75,7 +64,7 @@ namespace API_SWP.Controllers
 
             var refreshToken = GenerateRefreshToken();
             SetRefreshToken(refreshToken);
-
+                        
             return Ok(token);
         }
 
@@ -105,7 +94,7 @@ namespace API_SWP.Controllers
             var refreshToken = new RefreshToken
             {
                 Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
-                Expires = DateTime.Now.AddDays(7),
+                Expires = DateTime.Now.AddHours(3),
                 Created = DateTime.Now
             };
 
@@ -135,7 +124,7 @@ namespace API_SWP.Controllers
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
-                _configuration.GetSection("AppSettings:SecretKey").Value));
+                _configuration.GetSection("AppSettings:Token").Value));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 

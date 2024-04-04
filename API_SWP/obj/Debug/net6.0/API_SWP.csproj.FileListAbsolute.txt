@@ -182,3 +182,7 @@ Z:\SUMMER2024\SWP391\API_SWP\API_SWP\bin\Debug\net6.0\JWT.dll
 Z:\SUMMER2024\SWP391\API_SWP\API_SWP\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 Z:\SUMMER2024\SWP391\API_SWP\API_SWP\bin\Debug\net6.0\Newtonsoft.Json.dll
 Z:\SUMMER2024\SWP391\API_SWP\API_SWP\bin\Debug\net6.0\System.Text.Json.dll
+Z:\SUMMER2024\SWP391\API_SWP\API_SWP\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+Z:\SUMMER2024\SWP391\API_SWP\API_SWP\bin\Debug\net6.0\Scrutor.dll
+Z:\SUMMER2024\SWP391\API_SWP\API_SWP\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.dll
+Z:\SUMMER2024\SWP391\API_SWP\API_SWP\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
