@@ -30,7 +30,7 @@ builder.Services.AddTransient<IAdminRepository, AdminRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
-//builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 builder.Services.AddDbContext<SWPContext>(options => { options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); });
 
 builder.Services.AddEndpointsApiExplorer();
@@ -60,11 +60,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddCors(options => options.AddPolicy(name: "NgOrigins",
-    policy =>
-    {
-        policy.WithOrigins("https://localhost:7224").AllowAnyMethod().AllowAnyHeader();
-    }));
+//builder.Services.AddCors(options => options.AddPolicy(name: "NgOrigins",
+    //policy =>
+    //{
+    //    policy.WithOrigins("https://localhost:7224").AllowAnyMethod().AllowAnyHeader();
+    //}));
 
 var app = builder.Build();
 
@@ -83,6 +83,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCors("NgOrigins");
+//app.UseCors("NgOrigins");
+
+app.UseCors();
 
 app.Run();
