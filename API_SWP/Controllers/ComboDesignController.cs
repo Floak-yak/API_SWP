@@ -27,12 +27,26 @@ namespace API_SWP.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<ComboDesignModelView>))]
         public IActionResult GetCombos()
         {
-            var customer = _mapper.Map<List<ComboDesignModelView>>(_comboRepository.GetComboDesigns());
+            var combo = _mapper.Map<List<ComboDesignModelView>>(_comboRepository.GetComboDesigns());
+
+            List<HouseTypeOptionDto> options = _mapper.Map<List<HouseTypeOptionDto>>(_houseTypeOptionRepository.GetHouseTypeOptions());
+
+            foreach (var item in combo)
+            {
+                foreach (var op in options)
+                {
+                    if (item.ComboId.Equals(op.ComboDesignId))
+                    {
+                        item.HouseTypeOptions.Add(_mapper.Map<HouseTypeOptionModelView>(op));
+                    }
+                }
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok(customer);
+            return Ok(combo);
         }
         [HttpGet("comboId")]
         [ProducesResponseType(200, Type = typeof(ComboDesignModelView))]
@@ -44,6 +58,17 @@ namespace API_SWP.Controllers
                 return NotFound();
             }
             var combo = _mapper.Map<ComboDesignModelView>(_comboRepository.GetComboDesignById(comboId));
+
+            List<HouseTypeOptionDto> options = _mapper.Map<List<HouseTypeOptionDto>>(_houseTypeOptionRepository.GetHouseTypeOptions());
+
+            foreach (var op in options)
+            {
+                if (combo.ComboId.Equals(op.ComboDesignId))
+                {
+                    combo.HouseTypeOptions.Add(_mapper.Map<HouseTypeOptionModelView>(op));
+                }
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -68,7 +93,7 @@ namespace API_SWP.Controllers
 
             foreach (var item in _houseTypeOptionRepository.GetHouseTypeOptions())
             {
-                if (item.ComboDesignId == ComboId)
+                if (item.comboDesignId == ComboId)
                 {
                     _houseTypeOptionRepository.Remove(item);
                 }
@@ -97,7 +122,17 @@ namespace API_SWP.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var ComboMap = _mapper.Map<ComboDesign>(createCombo);
-
+            var options = _mapper.Map<List<HouseTypeOption>>(createCombo.HouseTypeOptions);
+            foreach (var item in options)
+            {
+                item.comboDesignId = ComboMap.ComboId;
+                do
+                {
+                    Random rnd = new();
+                    item.houseTypeId = rnd.Next(1, 1000000).ToString();
+                } while (_houseTypeOptionRepository.Exist(item.houseTypeId) == true);
+            }
+            ComboMap.HouseTypeOptions = options;
             //do
             //{
             //    Random rnd = new();

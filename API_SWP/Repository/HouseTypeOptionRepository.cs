@@ -20,12 +20,12 @@ namespace API_SWP.Repository
 
         public bool Exist(string id)
         {
-            return _context.HouseTypeOptions.Any(p => p.HouseTypeId == id);
+            return _context.HouseTypeOptions.Any(p => p.houseTypeId == id);
         }
 
         public HouseTypeOption GetHouseTypeOptionById(string id)
         {
-            return _context.HouseTypeOptions.Where(p => p.HouseTypeId == id).SingleOrDefault();
+            return _context.HouseTypeOptions.Where(p => p.houseTypeId == id).SingleOrDefault();
         }
 
         public List<HouseTypeOption> GetHouseTypeOptions()

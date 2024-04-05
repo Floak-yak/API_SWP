@@ -14,7 +14,7 @@ namespace API_SWP.Model
         public string ComboId { get; set; } = null!;
         public string? TypeName { get; set; }
         public string? Describe { get; set; }
-        public double? UnitPrice { get; set; }
+        public double? unit_price { get; set; }
 
         public virtual ICollection<HouseTypeOption> HouseTypeOptions { get; set; }
 

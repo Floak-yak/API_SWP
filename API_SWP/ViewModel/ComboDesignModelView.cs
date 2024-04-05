@@ -7,14 +7,14 @@ namespace API_SWP.ViewModel
     {
         public ComboDesignModelView()
         {
-            HouseTypeOptions = new HashSet<HouseTypeOptionDto>();
+            HouseTypeOptions = new HashSet<HouseTypeOptionModelView>();
         }
 
         public string ComboId { get; set; } = null!;
         public string? TypeName { get; set; }
         public string? Describe { get; set; }
-        public double? UnitPrice { get; set; }
+        public double? unit_price { get; set; }
 
-        public virtual ICollection<HouseTypeOptionDto> HouseTypeOptions { get; set; }
+        public virtual ICollection<HouseTypeOptionModelView> HouseTypeOptions { get; set; }
     }
 }

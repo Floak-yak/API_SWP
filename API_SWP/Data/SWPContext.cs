@@ -79,7 +79,7 @@ namespace API_SWP.Data
 
                 entity.Property(e => e.TypeName).HasMaxLength(100);
 
-                entity.Property(e => e.UnitPrice).HasColumnName("unit_price");
+                entity.Property(e => e.unit_price).HasColumnName("unit_price");
             });
 
             modelBuilder.Entity<ConstructionPriceQuotation>(entity =>
@@ -195,27 +195,27 @@ namespace API_SWP.Data
 
             modelBuilder.Entity<HouseTypeOption>(entity =>
             {
-                entity.HasKey(e => e.HouseTypeId);
+                entity.HasKey(e => e.houseTypeId);
 
                 entity.ToTable("houseTypeOption");
 
-                entity.Property(e => e.HouseTypeId)
+                entity.Property(e => e.houseTypeId)
                     .HasMaxLength(10)
                     .HasColumnName("houseTypeId");
 
-                entity.Property(e => e.ComboDesignId)
+                entity.Property(e => e.comboDesignId)
                     .HasMaxLength(10)
                     .HasColumnName("comboDesignId");
 
-                entity.Property(e => e.HouseType)
+                entity.Property(e => e.houseType)
                     .HasMaxLength(100)
                     .HasColumnName("houseType");
 
-                entity.Property(e => e.HouseTypePrice).HasColumnName("houseTypePrice");
+                entity.Property(e => e.houseTypePrice).HasColumnName("houseTypePrice");
 
                 entity.HasOne(d => d.ComboDesign)
                     .WithMany(p => p.HouseTypeOptions)
-                    .HasForeignKey(d => d.ComboDesignId)
+                    .HasForeignKey(d => d.comboDesignId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_houseTypeOption_comboDesign");
             });

@@ -77,7 +77,7 @@ namespace API_SWP.Controllers
         public IActionResult CreateOption([FromBody] HouseTypeOptionDto createOption)
         {
             if (createOption == null) return BadRequest(ModelState);
-            var option = _houseTypeOptionRepository.GetHouseTypeOptions().Where(p => p.HouseType.Trim() == createOption.HouseType.Trim()).FirstOrDefault();
+            var option = _houseTypeOptionRepository.GetHouseTypeOptions().Where(p => p.houseType.Trim() == createOption.houseType.Trim()).FirstOrDefault();
             if (option != null)
             {
                 ModelState.AddModelError("", "This option is already exist");
@@ -115,7 +115,7 @@ namespace API_SWP.Controllers
             if (!ModelState.IsValid) return BadRequest();
 
             var optionMap = _mapper.Map<HouseTypeOption>(updateOption);
-            optionMap.HouseTypeId = OptionId;
+            optionMap.houseTypeId = OptionId;
             if (!_houseTypeOptionRepository.Update(optionMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");

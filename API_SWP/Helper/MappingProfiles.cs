@@ -9,6 +9,10 @@ namespace API_SWP.Helper
     {
         public MappingProfiles()
         {
+            CreateMap<HouseTypeOptionModelView, HouseTypeOptionDto>();
+            CreateMap<HouseTypeOptionDto, HouseTypeOptionModelView>();
+            CreateMap<HouseTypeOption, HouseTypeOptionModelView>();
+            CreateMap<HouseTypeOptionModelView, HouseTypeOption>();
             CreateMap<HouseTypeOption, HouseTypeOptionDto>();
             CreateMap<HouseTypeOptionDto, HouseTypeOption>();
             CreateMap<ComboDesign, ComboDesignModelView>();
