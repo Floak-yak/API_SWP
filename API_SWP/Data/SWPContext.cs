@@ -301,7 +301,6 @@ namespace API_SWP.Data
                 entity.Property(e => e.AreaSquareValue).HasColumnName("areaSquareValue");
 
                 entity.Property(e => e.Describe)
-                    .HasMaxLength(100)
                     .HasColumnName("describe");
 
                 entity.Property(e => e.HouseSType)
