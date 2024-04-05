@@ -1,4 +1,5 @@
-﻿using API_SWP.Model;
+﻿using API_SWP.Dto;
+using API_SWP.Model;
 
 namespace API_SWP.ViewModel
 {
@@ -6,7 +7,7 @@ namespace API_SWP.ViewModel
     {
         public ComboDesignModelView()
         {
-            HouseTypeOptions = new HashSet<HouseTypeOption>();
+            HouseTypeOptions = new HashSet<HouseTypeOptionDto>();
         }
 
         public string ComboId { get; set; } = null!;
@@ -14,6 +15,6 @@ namespace API_SWP.ViewModel
         public string? Describe { get; set; }
         public double? UnitPrice { get; set; }
 
-        public virtual ICollection<HouseTypeOption> HouseTypeOptions { get; set; }
+        public virtual ICollection<HouseTypeOptionDto> HouseTypeOptions { get; set; }
     }
 }
