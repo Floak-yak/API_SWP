@@ -110,7 +110,7 @@ namespace API_SWP.Controllers
         [HttpPost("Create")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult Create([FromQuery] string customerId, [FromBody] ConstructionPriceQuotationCreateModel ConstructionPriceQuotationCreate)
+        public IActionResult Create([FromBody] ConstructionPriceQuotationCreateModel ConstructionPriceQuotationCreate)
         {
             if (ConstructionPriceQuotationCreate == null) return BadRequest(ModelState);
 
@@ -119,7 +119,7 @@ namespace API_SWP.Controllers
             var QuotationMap = _mapper.Map<ConstructionPriceQuotation>(ConstructionPriceQuotationCreate);
             QuotationMap.Staff = _staffRepository.GetStaff("1");
             QuotationMap.StaffId = "1";
-            QuotationMap.CustomerId = customerId;
+            //QuotationMap.CustomerId = customerId;
             QuotationMap.Status = "Still on going";
             QuotationMap.QuotationDate = DateTime.Now;
             Random rnd = new();
