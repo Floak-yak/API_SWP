@@ -11,6 +11,7 @@ namespace API_SWP.ViewModel
         public string CustomerName { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public string ProjectAddress { get; set; } = null!;
+        public string CustomerId { get; set; } = null!;
         public virtual ICollection<RequestCreateModel> Requests { get; set; }
     }
 }
