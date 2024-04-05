@@ -22,14 +22,15 @@ namespace API_SWP.Data
         public virtual DbSet<ConstructionPriceQuotation> ConstructionPriceQuotations { get; set; } = null!;
         public virtual DbSet<ConstructionReceived> ConstructionReceiveds { get; set; } = null!;
         public virtual DbSet<Customer> Customers { get; set; } = null!;
+        public virtual DbSet<HouseTypeOption> HouseTypeOptions { get; set; } = null!;
         public virtual DbSet<Post> Posts { get; set; } = null!;
         public virtual DbSet<PostDetail> PostDetails { get; set; } = null!;
         public virtual DbSet<PostImg> PostImgs { get; set; } = null!;
         public virtual DbSet<Request> Requests { get; set; } = null!;
         public virtual DbSet<TypeOfHouse> TypeOfHouses { get; set; } = null!;
         public virtual DbSet<Unit> Units { get; set; } = null!;
+        public virtual DbSet<UrlPath> UrlPaths { get; set; } = null!;
         public virtual DbSet<Staff> Staff { get; set; } = null!;
-        public virtual DbSet<UrlPath> UrlPath { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -78,10 +79,6 @@ namespace API_SWP.Data
 
                 entity.Property(e => e.TypeName).HasMaxLength(100);
 
-                entity.Property(e => e.Unit)
-                    .HasMaxLength(100)
-                    .HasColumnName("unit");
-
                 entity.Property(e => e.UnitPrice).HasColumnName("unit_price");
             });
 
@@ -95,7 +92,7 @@ namespace API_SWP.Data
                     .HasMaxLength(10)
                     .HasColumnName("Quotation ID");
 
-                entity.Property(e => e.CustomerId).HasMaxLength(50);
+                entity.Property(e => e.CustomerId).HasMaxLength(10);
 
                 entity.Property(e => e.CustomerName)
                     .HasMaxLength(50)
@@ -161,7 +158,7 @@ namespace API_SWP.Data
                 entity.ToTable("Customer");
 
                 entity.Property(e => e.CustomerSId)
-                    .HasMaxLength(50)
+                    .HasMaxLength(10)
                     .HasColumnName("Customer's Id");
 
                 entity.Property(e => e.CustomerEmail)
@@ -190,10 +187,37 @@ namespace API_SWP.Data
 
                             j.ToTable("Cus_Con");
 
-                            j.IndexerProperty<string>("CustomerId").HasMaxLength(50);
+                            j.IndexerProperty<string>("CustomerId").HasMaxLength(10);
 
                             j.IndexerProperty<string>("QuotationId").HasMaxLength(10);
                         });
+            });
+
+            modelBuilder.Entity<HouseTypeOption>(entity =>
+            {
+                entity.HasKey(e => e.HouseTypeId);
+
+                entity.ToTable("houseTypeOption");
+
+                entity.Property(e => e.HouseTypeId)
+                    .HasMaxLength(10)
+                    .HasColumnName("houseTypeId");
+
+                entity.Property(e => e.ComboDesignId)
+                    .HasMaxLength(10)
+                    .HasColumnName("comboDesignId");
+
+                entity.Property(e => e.HouseType)
+                    .HasMaxLength(100)
+                    .HasColumnName("houseType");
+
+                entity.Property(e => e.HouseTypePrice).HasColumnName("houseTypePrice");
+
+                entity.HasOne(d => d.ComboDesign)
+                    .WithMany(p => p.HouseTypeOptions)
+                    .HasForeignKey(d => d.ComboDesignId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_houseTypeOption_comboDesign");
             });
 
             modelBuilder.Entity<Post>(entity =>
@@ -271,20 +295,28 @@ namespace API_SWP.Data
                 entity.ToTable("Request");
 
                 entity.Property(e => e.RequestId)
-                    .HasMaxLength(10)
+                    .HasMaxLength(50)
                     .HasColumnName("RequestID");
 
-                entity.Property(e => e.Describe).HasMaxLength(100);
+                entity.Property(e => e.AreaSquareValue).HasColumnName("areaSquareValue");
+
+                entity.Property(e => e.Describe)
+                    .HasMaxLength(100)
+                    .HasColumnName("describe");
 
                 entity.Property(e => e.HouseSType)
                     .HasMaxLength(100)
                     .HasColumnName("House's type");
 
+                entity.Property(e => e.HouseTypePrice).HasColumnName("houseTypePrice");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(100)
+                    .HasColumnName("name");
+
                 entity.Property(e => e.QuotationId).HasMaxLength(10);
 
-                entity.Property(e => e.Unit).HasMaxLength(100);
-
-                entity.Property(e => e.UnitPrice).HasColumnName("Unit_price");
+                entity.Property(e => e.UnitPrice).HasColumnName("unit_price");
 
                 entity.HasOne(d => d.Quotation)
                     .WithMany(p => p.Requests)
@@ -304,7 +336,7 @@ namespace API_SWP.Data
 
                             j.ToTable("Req_Com");
 
-                            j.IndexerProperty<string>("RequestId").HasMaxLength(10);
+                            j.IndexerProperty<string>("RequestId").HasMaxLength(50);
 
                             j.IndexerProperty<string>("ComboId").HasMaxLength(10);
                         });
@@ -336,7 +368,7 @@ namespace API_SWP.Data
 
                             j.IndexerProperty<string>("TypeId").HasMaxLength(10);
 
-                            j.IndexerProperty<string>("RequestId").HasMaxLength(10);
+                            j.IndexerProperty<string>("RequestId").HasMaxLength(50);
                         });
             });
 
@@ -364,8 +396,31 @@ namespace API_SWP.Data
 
                             j.IndexerProperty<string>("UnitId").HasMaxLength(10);
 
-                            j.IndexerProperty<string>("RequestId").HasMaxLength(10).HasColumnName("Request_ID");
+                            j.IndexerProperty<string>("RequestId").HasMaxLength(50).HasColumnName("Request_ID");
                         });
+            });
+
+            modelBuilder.Entity<UrlPath>(entity =>
+            {
+                entity.HasKey(e => e.UrlId);
+
+                entity.ToTable("UrlPath");
+
+                entity.Property(e => e.UrlId)
+                    .HasMaxLength(10)
+                    .HasColumnName("Url_Id");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Imgurl).HasColumnName("imgurl");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(100)
+                    .HasColumnName("title");
+
+                entity.Property(e => e.Url).HasColumnName("url");
             });
 
             modelBuilder.Entity<Staff>(entity =>
@@ -391,28 +446,7 @@ namespace API_SWP.Data
                     .HasColumnName("Staff's name");
             });
 
-            modelBuilder.Entity<UrlPath>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("UrlPath");
-
-                entity.Property(e => e.Description)
-                    .HasMaxLength(200)
-                    .HasColumnName("description");
-
-                entity.Property(e => e.Imgurl).HasColumnName("imgurl");
-
-                entity.Property(e => e.Title)
-                    .HasMaxLength(100)
-                    .HasColumnName("title");
-
-                entity.Property(e => e.Url).HasColumnName("url");
-
-                entity.Property(e => e.UrlId)
-                    .HasMaxLength(10)
-                    .HasColumnName("Url_Id");
-            });
+            OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

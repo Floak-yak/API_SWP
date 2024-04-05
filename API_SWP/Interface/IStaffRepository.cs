@@ -4,16 +4,16 @@ namespace API_SWP.Interface
 {
     public interface IStaffRepository
     {
-        List<Staff> GetStaffByName(string staffName);
-        ICollection<Staff> GetStaffs();
-        Staff GetStaff(string staffid);
+        List<Model.Staff> GetStaffByName(string staffName);
+        ICollection<Model.Staff> GetStaffs();
+        Model.Staff GetStaff(string staffid);
         bool CheckLoginForStaffB(string staffEmail, string staffPassword);
-        Staff CheckLoginForStaff(string staffEmail, string staffPassword);
-        Staff GetStaffByEmail(string staffEmail);
+        Model.Staff CheckLoginForStaff(string staffEmail, string staffPassword);
+        Model.Staff GetStaffByEmail(string staffEmail);
         bool StaffExist(string staffid);
-        bool CreateStaff(Staff staff);
-        bool RemoveStaff(Staff staff);
-        bool UpdateStaff(Staff staff);
+        bool CreateStaff(Model.Staff staff);
+        bool RemoveStaff(Model.Staff staff);
+        bool UpdateStaff(Model.Staff staff);
         bool Save();
     }
 }

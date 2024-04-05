@@ -14,11 +14,12 @@ namespace API_SWP.Model
 
         public string RequestId { get; set; } = null!;
         public string HouseSType { get; set; } = null!;
-        public double? Size { get; set; }
-        public string Unit { get; set; } = null!;
+        public double? AreaSquareValue { get; set; }
+        public string Name { get; set; } = null!;
         public string QuotationId { get; set; } = null!;
         public double? UnitPrice { get; set; }
         public string? Describe { get; set; }
+        public double? HouseTypePrice { get; set; }
 
         public virtual ConstructionPriceQuotation Quotation { get; set; } = null!;
 

@@ -10,7 +10,6 @@ namespace API_SWP.Dto
         }
         public string QuotationId { get; set; } = null!;
         public string ?Status { get; set; }
-        public string StaffId { get; set; } = null!;
         public string CustomerName { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public string ProjectAddress { get; set; } = null!;

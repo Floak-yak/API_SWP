@@ -15,6 +15,8 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 // Add services to the container.
+builder.Services.AddScoped<IHouseTypeOptionRepository, HouseTypeOptionRepository>();
+builder.Services.AddScoped<IComboDesignRepository, ComboDesignRepository>();
 builder.Services.AddScoped<IUrlPathRepository, UrlPathRepository>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IStaffRepository, StaffRepository>();

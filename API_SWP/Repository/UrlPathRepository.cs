@@ -24,7 +24,7 @@ namespace API_SWP.Repository
 
         public ICollection<UrlPath> GetUrlPath()
         {
-            return _context.UrlPath.ToList();
+            return _context.UrlPaths.ToList();
         }
 
         public bool RemoveUrlPath(UrlPath urlPath)
@@ -35,17 +35,17 @@ namespace API_SWP.Repository
 
         public bool UrlPathExist(string id)
         {
-            return _context.UrlPath.Any(p => p.UrlId == id);
+            return _context.UrlPaths.Any(p => p.UrlId == id);
         }
 
         public UrlPath GetUrlById(string id)
         {
-            return _context.UrlPath.Where(p => p.UrlId == id).FirstOrDefault();
+            return _context.UrlPaths.Where(p => p.UrlId == id).FirstOrDefault();
         }
 
         List<UrlPath> IUrlPathRepository.GetUrlPathByTitle(string title)
         {
-            return _context.UrlPath.Where(p => p.Title.Contains(title)).ToList();
+            return _context.UrlPaths.Where(p => p.Title.Contains(title)).ToList();
         }
     }
 }

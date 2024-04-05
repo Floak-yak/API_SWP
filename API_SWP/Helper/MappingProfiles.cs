@@ -9,6 +9,10 @@ namespace API_SWP.Helper
     {
         public MappingProfiles()
         {
+            CreateMap<HouseTypeOption, HouseTypeOptionDto>();
+            CreateMap<HouseTypeOptionDto, HouseTypeOption>();
+            CreateMap<ComboDesign, ComboDesignModelView>();
+            CreateMap<ComboDesignModelView, ComboDesign>();
             CreateMap<RequestDto, RequestCreateModel>();
             CreateMap<RequestCreateModel, RequestDto>();
             CreateMap<ConstructionPriceQuotation, ConstructionPriceQuotationCreateModel>();
@@ -25,8 +29,8 @@ namespace API_SWP.Helper
             CreateMap<RequestCreateModel, Request>();
             CreateMap<Request, RequestUpdateModel>();
             CreateMap<RequestUpdateModel, Request>();
-            CreateMap<StaffUpdateModel, Staff>();
-            CreateMap<Staff, StaffUpdateModel>();
+            CreateMap<StaffUpdateModel, Model.Staff>();
+            CreateMap<Model.Staff, StaffUpdateModel>();
             CreateMap<Admin, AdminModel>();
             CreateMap<AdminModel, Admin>();
             CreateMap<Customer, CustomerRegisterDto>();
@@ -37,14 +41,14 @@ namespace API_SWP.Helper
             CreateMap<ConstructionReceived, ConstructionReceivedDto>();
             CreateMap<Post, PostDto>();
             CreateMap<Request, RequestDto>();
-            CreateMap<Staff, StaffDto>();
+            CreateMap<Model.Staff, StaffDto>();
             CreateMap<CustomerDto, Customer>();
             CreateMap<AdminDto, Admin>();
             CreateMap<ConstructionPriceQuotationDto, ConstructionPriceQuotation>();
             CreateMap<ConstructionReceivedDto, ConstructionReceived>();
             CreateMap<PostDto, Post>();
             CreateMap<RequestDto, Request>();
-            CreateMap<StaffDto, Staff>();
+            CreateMap<StaffDto, Model.Staff>();
         }
     }
 }

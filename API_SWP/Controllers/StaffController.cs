@@ -21,7 +21,7 @@ namespace API_SWP.Controllers
             _mapper = mapper;
         }
         [HttpGet("GetAllStaff")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Staff>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Model.Staff>))]
         public IActionResult GetStaffs()
         {
             var staff = _mapper.Map<List<StaffDto>>(_staffrepository.GetStaffs());
@@ -32,7 +32,7 @@ namespace API_SWP.Controllers
             return Ok(staff);
         }
         [HttpGet("GetStaffById")]
-        [ProducesResponseType(200, Type = typeof(Staff))]
+        [ProducesResponseType(200, Type = typeof(Model.Staff))]
         [ProducesResponseType(400)]
         public IActionResult GetStaff(string StaffId)
         {
@@ -81,7 +81,7 @@ namespace API_SWP.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var staffMap = _mapper.Map<Staff>(staffCreate);
+            var staffMap = _mapper.Map<Model.Staff>(staffCreate);
             if (!_staffrepository.CreateStaff(staffMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
@@ -106,7 +106,7 @@ namespace API_SWP.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var staffMap = _mapper.Map<Staff>(updatedStaff);
+            var staffMap = _mapper.Map<Model.Staff>(updatedStaff);
             staffMap.StaffSId = staffId;
             if (!_staffrepository.UpdateStaff(staffMap))
             {
@@ -141,7 +141,7 @@ namespace API_SWP.Controllers
             return NoContent();
         }
         [HttpGet("CheckLoginStaff")]
-        [ProducesResponseType(200, Type = typeof(Staff))]
+        [ProducesResponseType(200, Type = typeof(Model.Staff))]
         [ProducesResponseType(400)]
         public IActionResult CheckLoginStaff([FromQuery] string staffEmail, [FromQuery] string staffPassword)
         {

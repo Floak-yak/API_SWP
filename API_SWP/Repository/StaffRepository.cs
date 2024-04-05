@@ -13,23 +13,23 @@ namespace API_SWP.Repository
             _context = context;
         }
 
-        public bool CreateStaff(Staff staff)
+        public bool CreateStaff(Model.Staff staff)
         {
             _context.Add(staff);
             return Save();
         }
-        public ICollection<Staff> GetStaffs()
+        public ICollection<Model.Staff> GetStaffs()
         {
             return _context.Staff.OrderBy(p => p.StaffSId).ToList();
         }
 
-        public Staff GetStaff(string staffid)
+        public Model.Staff GetStaff(string staffid)
         {
             return _context.Staff.Where(p => p.StaffSId == staffid).FirstOrDefault();
         }
 
 
-        public bool RemoveStaff(Staff staff)
+        public bool RemoveStaff(Model.Staff staff)
         {
             _context.Remove(staff);
             return Save();
@@ -46,13 +46,13 @@ namespace API_SWP.Repository
             return _context.Staff.Any(p => p.StaffSId == staffid);
         }
 
-        public bool UpdateStaff(Staff staff)
+        public bool UpdateStaff(Model.Staff staff)
         {
             _context.Update(staff);
             return Save();
         }
 
-        public Staff CheckLoginForStaff(string staffEmail, string staffPassword)
+        public Model.Staff CheckLoginForStaff(string staffEmail, string staffPassword)
         {
                 return _context.Staff.SingleOrDefault(p => p.StaffSEmail == staffEmail && p.StaffPassword == staffPassword);
         }
@@ -61,12 +61,12 @@ namespace API_SWP.Repository
             return _context.Staff.Any(p => p.StaffSEmail == staffEmail && p.StaffPassword == staffPassword);
         }
 
-        public List<Staff> GetStaffByName(string staffName)
+        public List<Model.Staff> GetStaffByName(string staffName)
         {
             return _context.Staff.Where(p => p.StaffSName.Contains(staffName)).ToList();
         }
 
-        public Staff GetStaffByEmail(string staffEmail)
+        public Model.Staff GetStaffByEmail(string staffEmail)
         {
             return _context.Staff.SingleOrDefault(p => p.StaffSEmail == staffEmail);
         }

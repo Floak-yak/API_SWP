@@ -21,8 +21,8 @@ namespace API_SWP.Controllers
             _customerRepository = customerRepository;
             _mapper = mapper;
         }
-        [HttpGet("GetAllCustomerInformation"), Authorize(Roles = "Admin")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Customer>))]
+        [HttpGet("GetAllCustomerInformation")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<CustomerDto>))]
         public IActionResult GetCustomer()
         {
             var customer = _mapper.Map<List<CustomerDto>>(_customerRepository.GetCustomers());
@@ -32,8 +32,8 @@ namespace API_SWP.Controllers
             }
             return Ok(customer);
         }
-        [HttpGet("Customerid")]
-        [ProducesResponseType(200, Type=typeof(Customer))]
+        [HttpGet("Customerid"), Authorize(Roles = "Admin")]
+        [ProducesResponseType(200, Type=typeof(CustomerDto))]
         [ProducesResponseType(400)]
         public IActionResult GetCustomerById(string customerid)
         {
@@ -60,8 +60,8 @@ namespace API_SWP.Controllers
             }
             return Ok(customers);
         }
-        [HttpGet("CustomerEmail")]
-        [ProducesResponseType(200, Type = typeof(Customer))]
+        [HttpGet("GetCustomerByEmail")]
+        [ProducesResponseType(200, Type = typeof(CustomerDto))]
         [ProducesResponseType(400)]
         public IActionResult GetCustomerByEmail(string customeremail)
         {
