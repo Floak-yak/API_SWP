@@ -15,9 +15,13 @@ namespace API_SWP.Controllers
     {
         private readonly IAdminRepository _adminRepository;
         private readonly IMapper _mapper;
+        private readonly IStaffRepository _staffRepository;
+        private readonly ICustomerRepository _customerRepository;
 
-        public AdminController(IAdminRepository adminRepository, IMapper mapper)
+        public AdminController(IAdminRepository adminRepository, IMapper mapper, ICustomerRepository customerRepository, IStaffRepository staffRepository)
         {
+            _staffRepository = staffRepository;
+            _customerRepository = customerRepository;
             _adminRepository = adminRepository;
             _mapper = mapper;
         }
@@ -108,6 +112,12 @@ namespace API_SWP.Controllers
             if (admin != null)
             {
                 ModelState.AddModelError("", "Admin already exists");
+                return StatusCode(422, ModelState);
+            }
+
+            if (_adminRepository.GetAdminByEmail(AdminCreate.AdminSMail) != null || _customerRepository.GetCustomerByEmail(AdminCreate.AdminSMail) != null || _staffRepository.GetStaffByEmail(AdminCreate.AdminSMail) != null)
+            {
+                ModelState.AddModelError("", "Email already exists");
                 return StatusCode(422, ModelState);
             }
 

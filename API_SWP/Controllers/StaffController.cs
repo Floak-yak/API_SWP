@@ -14,14 +14,18 @@ namespace API_SWP.Controllers
     {
         private readonly IStaffRepository _staffrepository;
         private readonly IMapper _mapper;
+        private readonly ICustomerRepository _customerRepository;
+        private readonly IAdminRepository _adminRepository;
 
-        public StaffController(IStaffRepository StaffRepository, IMapper mapper)
+        public StaffController(IAdminRepository adminRepository, IMapper mapper, ICustomerRepository customerRepository, IStaffRepository staffRepository)
         {
-            _staffrepository = StaffRepository;
+            _customerRepository = customerRepository;
+            _adminRepository = adminRepository;
+            _staffrepository = staffRepository;
             _mapper = mapper;
         }
         [HttpGet("GetAllStaff")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Model.Staff>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<StaffDto>))]
         public IActionResult GetStaffs()
         {
             var staff = _mapper.Map<List<StaffDto>>(_staffrepository.GetStaffs());
@@ -32,7 +36,7 @@ namespace API_SWP.Controllers
             return Ok(staff);
         }
         [HttpGet("GetStaffById")]
-        [ProducesResponseType(200, Type = typeof(Model.Staff))]
+        [ProducesResponseType(200, Type = typeof(StaffDto))]
         [ProducesResponseType(400)]
         public IActionResult GetStaff(string StaffId)
         {
@@ -68,20 +72,32 @@ namespace API_SWP.Controllers
             if (staffCreate == null)
                 return BadRequest(ModelState);
 
-            var staffs = _staffrepository.GetStaffs()
-                .Where(c => c.StaffSName.Trim().ToUpper() == staffCreate.StaffSName.TrimEnd().ToUpper())
-                .FirstOrDefault();
-
-            if (staffs != null)
+            if (_staffrepository.GetStaffs()
+                .Where(c => c.StaffSId.Trim().ToUpper() == staffCreate.StaffSId.TrimEnd().ToUpper())
+                .FirstOrDefault() != null)
             {
-                ModelState.AddModelError("", "Staff already exists");
+                ModelState.AddModelError("", "Id already exists");
+                return StatusCode(422, "Staff already exists");
+            }
+
+            if (_adminRepository.GetAdminByEmail(staffCreate.StaffSEmail) != null || _customerRepository.GetCustomerByEmail(staffCreate.StaffSEmail) != null || _staffrepository.GetStaffByEmail(staffCreate.StaffSEmail) != null)
+            {
+                ModelState.AddModelError("", "Email already exists");
                 return StatusCode(422, ModelState);
+            }
+
+            if (_staffrepository.GetStaffs()
+                .Where(c => c.StaffSEmail.Trim().ToUpper() == staffCreate.StaffSEmail.TrimEnd().ToUpper())
+                .FirstOrDefault() != null)
+            {
+                ModelState.AddModelError("", "Email already exists");
+                return StatusCode(422, "Staff already exists");
             }
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var staffMap = _mapper.Map<Model.Staff>(staffCreate);
+            var staffMap = _mapper.Map<Staff>(staffCreate);
             if (!_staffrepository.CreateStaff(staffMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
@@ -106,7 +122,7 @@ namespace API_SWP.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var staffMap = _mapper.Map<Model.Staff>(updatedStaff);
+            var staffMap = _mapper.Map<Staff>(updatedStaff);
             staffMap.StaffSId = staffId;
             if (!_staffrepository.UpdateStaff(staffMap))
             {
@@ -141,7 +157,7 @@ namespace API_SWP.Controllers
             return NoContent();
         }
         [HttpGet("CheckLoginStaff")]
-        [ProducesResponseType(200, Type = typeof(Model.Staff))]
+        [ProducesResponseType(200, Type = typeof(Staff))]
         [ProducesResponseType(400)]
         public IActionResult CheckLoginStaff([FromQuery] string staffEmail, [FromQuery] string staffPassword)
         {

@@ -32,7 +32,8 @@ namespace API_SWP.Controllers
             }
             return Ok(customer);
         }
-        [HttpGet("Customerid"), Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [HttpGet("Customerid")]
         [ProducesResponseType(200, Type=typeof(CustomerDto))]
         [ProducesResponseType(400)]
         public IActionResult GetCustomerById(string customerid)
