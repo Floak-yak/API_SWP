@@ -177,24 +177,27 @@ namespace API_SWP.Controllers
             return Ok("Update Successfully");
         }
 
-        [HttpGet("GetConstructionPriceQuotationByCustomerId")]
+        [HttpGet("GetConstructionPriceQuotationByCustomerEmail")]
         [ProducesResponseType(200, Type = typeof(ConstructionPriceQuotationDto))]
         [ProducesResponseType(400)]
-        public IActionResult GetConstructionPriceQuotationByCustomerId(string customerId)
+        public IActionResult GetConstructionPriceQuotationByCustomerEmail(string customerEmail)
         {
-            if (!_customerRepository.CustomerExits(customerId))
+            if (!_customerRepository.CustomerExits(_customerRepository.GetCustomerByEmail(customerEmail).CustomerSId))
             {
                 return NotFound();
             }
 
-            var constructionPriceQuotation = _mapper.Map<ConstructionPriceQuotationDto>(_constructionPriceQuotationRepository.GetConstructionPriceQuotation(customerId));
+            var constructionPriceQuotation = _mapper.Map<List<ConstructionPriceQuotationDto>>(_constructionPriceQuotationRepository.GetConstructionPriceQuotationByCustomerEmail(customerEmail));
 
             List<RequestDto> request = _mapper.Map<List<RequestDto>>(_requestRepository.GetRequests());
-            foreach (var req in request)
+            foreach (var quotation in constructionPriceQuotation)
             {
-                if (constructionPriceQuotation.QuotationId.Equals(req.QuotationId))
+                foreach (var req in request)
                 {
-                    constructionPriceQuotation.Requests.Add(req);
+                    if (quotation.QuotationId.Equals(req.QuotationId))
+                    {
+                        quotation.Requests.Add(req);
+                    }
                 }
             }
 

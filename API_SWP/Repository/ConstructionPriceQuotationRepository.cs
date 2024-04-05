@@ -36,6 +36,11 @@ namespace API_SWP.Repository
             return _context.ConstructionPriceQuotations.Where(p => p.QuotationId == id).FirstOrDefault();
         }
 
+        public List<ConstructionPriceQuotation> GetConstructionPriceQuotationByCustomerEmail(string customerEmail)
+        {
+            return _context.ConstructionPriceQuotations.OrderBy(p => p.QuotationId).Where(p => p.CustomerId == _context.Customers.Where(p => p.CustomerEmail == customerEmail).SingleOrDefault().CustomerSId).ToList();
+        }
+
         public List<ConstructionPriceQuotation> GetConstructionPriceQuotationByCustomerId(string customerId)
         {
             return _context.ConstructionPriceQuotations.OrderBy(p => p.QuotationId).Where(p => p.CustomerId == customerId).ToList();

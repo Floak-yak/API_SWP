@@ -7,6 +7,7 @@ namespace API_SWP.Interface
         ICollection<ConstructionPriceQuotation> GetConstructionPriceQuotations();
         ConstructionPriceQuotation GetConstructionPriceQuotation(string id);
         List<ConstructionPriceQuotation> GetConstructionPriceQuotationByCustomerId(string customerId);
+        List<ConstructionPriceQuotation> GetConstructionPriceQuotationByCustomerEmail(string customerEmail);
         string GetStatus(string id);
         bool ConstructionPriceQuotationExist(string id);
         bool CreateCostructionPriceQuotation(ConstructionPriceQuotation constructionPriceQuotation);
