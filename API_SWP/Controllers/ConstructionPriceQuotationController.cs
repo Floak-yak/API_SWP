@@ -13,13 +13,15 @@ namespace API_SWP.Controllers
     [ApiController]
     public class ConstructionPriceQuotationController : Controller
     {
+        private readonly ICustomerRepository _customerRepository;
         private readonly IConstructionPriceQuotationRepository _constructionPriceQuotationRepository;
         private readonly IMapper _mapper;
         private readonly IRequestRepository _requestRepository;
         private readonly IStaffRepository _staffRepository;
 
-        public ConstructionPriceQuotationController(IConstructionPriceQuotationRepository constructionPriceQuotationRepository, IMapper mapper, IRequestRepository requestRepository, IStaffRepository staffRepository)
+        public ConstructionPriceQuotationController(IConstructionPriceQuotationRepository constructionPriceQuotationRepository, IMapper mapper, IRequestRepository requestRepository, IStaffRepository staffRepository, ICustomerRepository customerRepository)
         {
+            _customerRepository = customerRepository;
             _constructionPriceQuotationRepository = constructionPriceQuotationRepository;
             _mapper = mapper;
             _requestRepository = requestRepository;
@@ -173,6 +175,34 @@ namespace API_SWP.Controllers
                 return StatusCode(500, ModelState);
             }
             return Ok("Update Successfully");
+        }
+
+        [HttpGet("GetConstructionPriceQuotationByCustomerId")]
+        [ProducesResponseType(200, Type = typeof(ConstructionPriceQuotationDto))]
+        [ProducesResponseType(400)]
+        public IActionResult GetConstructionPriceQuotationByCustomerId(string customerId)
+        {
+            if (!_customerRepository.CustomerExits(customerId))
+            {
+                return NotFound();
+            }
+
+            var constructionPriceQuotation = _mapper.Map<ConstructionPriceQuotationDto>(_constructionPriceQuotationRepository.GetConstructionPriceQuotation(customerId));
+
+            List<RequestDto> request = _mapper.Map<List<RequestDto>>(_requestRepository.GetRequests());
+            foreach (var req in request)
+            {
+                if (constructionPriceQuotation.QuotationId.Equals(req.QuotationId))
+                {
+                    constructionPriceQuotation.Requests.Add(req);
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(constructionPriceQuotation);
         }
     }
 }
