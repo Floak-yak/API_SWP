@@ -39,7 +39,7 @@ namespace API_SWP.Controllers
                 user.UserName = "Admin";
                 user.Email = request.Email;
                 user.Password = request.Password;
-
+                user.Id = _adminRepository.GetAdminByEmail(request.Email).AdminSId;
             }
             else if (_customerRepository.CheckLoginForCustomerB(request.Email, request.Password))
             {
@@ -47,6 +47,7 @@ namespace API_SWP.Controllers
                 user.UserName = _customerRepository.GetCustomerByEmail(request.Email).CustomerSName;
                 user.Email = request.Email;
                 user.Password = request.Password;
+                user.Id = _customerRepository.GetCustomerByEmail(request.Email).CustomerSId;
             }
             else if (_staffRepository.CheckLoginForStaffB(request.Email, request.Password))
             {
@@ -54,6 +55,7 @@ namespace API_SWP.Controllers
                 user.Email = request.Email;
                 user.UserName = _staffRepository.GetStaffByEmail(request.Email).StaffSName;
                 user.Password = request.Password;
+                user.Id = _staffRepository.GetStaffByEmail(request.Email).StaffSId;
             } 
             else
             {
@@ -119,6 +121,7 @@ namespace API_SWP.Controllers
         {
             List<Claim> claims = new List<Claim>
             {
+                new Claim("Id", user.Id),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Role, user.Role),
